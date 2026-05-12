@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opus Spike: 3D Cards + Cursor Lerp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Satoshi:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Brand colors */
+    --void: #0D0B14;
+    --amber: #E8A034;
+    --orange: #D4431A;
+    --crimson: #7A1530;
+    --violet: #3D1155;
+    --cream: #F5F0E8;
+    --surface-dark: #13101E;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    cursor: none;
+  }
+
+  body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Custom Cursor */
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+  }
+
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--amber);
+    opacity: 0.6;
+    transition: width 0.2s ease-out, height 0.2s ease-out;
+  }
+
+  body.hovering .cursor-ring {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Disable cursor on mobile */
+  @media (hover: none) {
+    html { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+
+  /* 3D Card Container */
+  .hero-3d {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    perspective: 1400px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-left: 5vw;
+    padding-bottom: 15vh;
+  }
+
+  .card {
+    position: absolute;
+    right: 0;
+    width: 320px;
+    height: 420px;
+    border-radius: 14px;
+    transform-style: preserve-3d;
+    box-shadow: 0 24px 80px rgba(232, 160, 52, 0.08);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+
+  .card-1 {
+    transform: rotateY(15deg) rotateX(-8deg) translateZ(-80px);
+    animation-delay: 0s;
+    background: linear-gradient(145deg, var(--crimson), var(--violet));
+  }
+
+  .card-2 {
+    transform: rotateY(-10deg) rotateX(5deg) translateZ(20px);
+    animation-delay: -1.5s;
+    background: linear-gradient(145deg, var(--amber), var(--orange));
+  }
+
+  .card-3 {
+    transform: rotateY(8deg) rotateX(-12deg) translateZ(60px);
+    animation-delay: -3s;
+    background: linear-gradient(145deg, var(--surface-dark), var(--violet));
+  }
+
+  .card-4 {
+    transform: rotateY(-18deg) rotateX(8deg) translateZ(-40px);
+    animation-delay: -4.5s;
+    background: linear-gradient(145deg, var(--violet), var(--crimson));
+  }
+
+  .card-content {
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--cream);
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  .card-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.2;
+  }
+
+  .card-mock {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    margin: 12px 0;
+  }
+
+  /* Typography test */
+  .hero-text {
+    position: absolute;
+    bottom: 15vh;
+    left: 5vw;
+    z-index: 10;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    font-size: 11vw;
+    line-height: 0.9;
+  }
+
+  .hero-title .italic {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    opacity: 0.4;
+    margin-top: 24px;
+    margin-bottom: 32px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .cta-primary {
+    background: var(--amber);
+    color: var(--void);
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .cta-secondary {
+    color: var(--cream);
+    padding: 12px 28px;
+    border: 1px solid rgba(245,240,232,0.2);
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+  <!-- Custom Cursor Elements -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- 3D Cards -->
+  <div class="hero-3d">
+    <div class="card card-1">
+      <div class="card-content">
+        <span class="card-label">Instagram Post</span>
+        <div class="card-mock"></div>
+        <span class="card-title">Brand Identity<br>Concept</span>
+      </div>
+    </div>
+    <div class="card card-2">
+      <div class="card-content">
+        <span class="card-label">Reel Thumbnail</span>
+        <div class="card-mock"></div>
+        <span class="card-title">Content Series</span>
+      </div>
+    </div>
+    <div class="card card-3">
+      <div class="card-content">
+        <span class="card-label">Brand Identity</span>
+        <div class="card-mock"></div>
+        <span class="card-title">Visual Direction</span>
+      </div>
+    </div>
+    <div class="card card-4">
+      <div class="card-content">
+        <span class="card-label">Content Calendar</span>
+        <div class="card-mock"></div>
+        <span class="card-title">Editorial Grid</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Text -->
+  <div class="hero-text">
+    <div class="hero-eyebrow">Content. Cinema. Craft.</div>
+    <h1 class="hero-title">
+      Your brand<br>
+      <span class="italic">deserves</span><br>
+      an opus.
+    </h1>
+    <p class="hero-sub">We build brands that feel something real.</p>
+    <div class="cta-row">
+      <a href="#" class="cta-primary">Start a conversation</a>
+      <a href="#" class="cta-secondary">See our work →</a>
+    </div>
+  </div>
+
+  <script>
+    // Cursor lerp logic
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+    const lerpFactor = 0.12; // 12% lerp
+    
+    // Update mouse position
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Dot follows instantly
+      cursorDot.style.left = mouseX - 3 + 'px';
+      cursorDot.style.top = mouseY - 3 + 'px';
+    });
+    
+    // Lerp ring position
+    function animateRing() {
+      ringX += (mouseX - ringX) * lerpFactor;
+      ringY += (mouseY - ringY) * lerpFactor;
+      
+      cursorRing.style.left = ringX - 16 + 'px';
+      cursorRing.style.top = ringY - 16 + 'px';
+      
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    
+    // Hover expansion
+    const interactiveElements = document.querySelectorAll('a, button');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+    });
+  </script>
+</body>
+</html>

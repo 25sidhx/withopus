@@ -1,0 +1,118 @@
+/* ─────────────────────────────────────
+   PITCH / CTA  — cinematic closer
+───────────────────────────────────── */
+.pitch {
+  padding: clamp(100px, 18vw, 240px) var(--safe);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--void-3);
+}
+
+/* Gradient bloom behind */
+.pitch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 60%,
+      var(--glow-amber) 0%,
+      rgba(212,67,26,0.08) 30%,
+      var(--glow-crimson) 55%,
+      transparent 72%);
+  pointer-events: none;
+}
+
+/* Slow animated gradient line at top */
+.pitch::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--gradient);
+}
+
+.pitch-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.pitch-text {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(3.5rem, 12vw, 10rem);
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--cream);
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.pitch-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 380px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.pitch-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.pitch-cta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  transition: all 0.4s var(--ease-out);
+}
+
+.pitch-cta-primary {
+  background: var(--gradient);
+  color: var(--void);
+  padding: 14px 36px;
+  border-radius: var(--r-pill);
+}
+
+.pitch-cta-primary:hover {
+  opacity: 0.86;
+  transform: scale(0.97);
+}
+
+.pitch-cta-secondary {
+  color: var(--muted);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--void-3);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.pitch-cta-secondary:hover {
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+@media (max-width: 480px) {
+  .pitch-ctas {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .pitch-cta-primary { padding: 12px 28px; }
+  .pitch-cta-secondary { padding: 12px 0; }
+  .pitch-text { font-size: clamp(3rem, 10vw, 5rem); }
+}

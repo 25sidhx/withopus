@@ -1,0 +1,108 @@
+/* ═══════════════════════════════════════════════
+   orb.css — Spline 3D Embed
+   Container sizing, edge masking, scroll fade, color grading.
+═══════════════════════════════════════════════ */
+
+/* ── Container ───────────────────────────────── */
+.hero-orb {
+  position: absolute;
+  right: -5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60vw;
+  height: 90vh;
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+  animation: orb-appear 2.2s var(--ease-out) 1.2s forwards;
+  
+  /* Feather edges — soft vignette so it feels ambient, not contained */
+  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 55% 50%, black 30%, transparent 72%);
+  mask-image: radial-gradient(ellipse 65% 60% at 55% 50%, black 30%, transparent 72%);
+}
+
+.hero-orb spline-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent !important;
+  
+  /* Color-grade the Spline scene to match Opus amber/gold brand palette */
+  filter: sepia(0.35) hue-rotate(-10deg) saturate(2.2) brightness(1.05) contrast(1.15);
+}
+
+/* Hide ALL Spline UI overlays — logo, hint, watermark */
+spline-viewer::part(logo) { display: none !important; }
+spline-viewer::part(hint) { display: none !important; }
+spline-viewer::part(watermark) { display: none !important; }
+
+/* Nuclear fallback: opaque overlay blocks any Spline UI text on mobile */
+.hero-orb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* On mobile: cover the bottom-center where the hint text appears */
+  background: transparent;
+}
+
+@keyframes orb-appear {
+  from { opacity: 0; transform: translateY(-50%) scale(0.96); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1);    }
+}
+
+/* ── Hero layout shift — give text room beside orb ── */
+@media (min-width: 861px) {
+  .hero-content {
+    max-width: 520px;
+  }
+}
+
+/* ── Mobile ──────────────────────────────────── */
+@media (max-width: 860px) {
+  .hero-orb {
+    position: absolute;
+    right: auto;
+    left: 50%;
+    top: auto;
+    /* Push lower so the center of the sphere (where hint text lives) is below fold */
+    bottom: -10vh;
+    transform: translateX(-50%);
+    width: 110vw;
+    height: 55vh;
+    /* Stay BEHIND all hero content */
+    z-index: 0;
+    opacity: 0;
+    animation: orb-appear-mobile 2.2s var(--ease-out) 1.2s forwards;
+
+    /* Fade from all edges so particles feel atmospheric */
+    -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 75%, black 5%, transparent 60%);
+    mask-image: radial-gradient(ellipse 85% 70% at 50% 75%, black 5%, transparent 60%);
+  }
+
+  @keyframes orb-appear-mobile {
+    from { opacity: 0; }
+    to   { opacity: 0.45; }
+  }
+
+  /* Block "Move your mouse" — covers the center of the orb where hint text renders */
+  .hero-orb::after {
+    background:
+      /* Radial block over the orb center where hint text appears */
+      radial-gradient(ellipse 60% 30% at 50% 40%, rgba(13,11,20,0.95) 0%, transparent 70%),
+      /* Bottom fade to blend into page */
+      linear-gradient(to top, var(--void) 0%, rgba(13,11,20,0.6) 25%, transparent 55%);
+  }
+
+  /* Spline is purely decorative on mobile — disable all interaction */
+  .hero-orb spline-viewer {
+    pointer-events: none !important;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+}

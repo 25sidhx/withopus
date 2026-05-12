@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opus — Brand Guidelines</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --black: #0D0B14;
+    --amber: #E8A034;
+    --orange: #D4431A;
+    --crimson: #7A1530;
+    --violet: #3D1155;
+    --cream: #F5F0E8;
+    --mid-gray: #2A2535;
+    --light-gray: #6B6478;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* COVER */
+  .cover {
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 64px;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .cover-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 40%, #E8A03455 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 60%, #7A153044 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, #3D115533 0%, transparent 60%);
+    filter: blur(40px);
+  }
+
+  .cover-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  .cover-content { position: relative; z-index: 2; }
+
+  .cover-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--light-gray);
+    margin-bottom: 24px;
+  }
+
+  .cover-wordmark {
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--amber), var(--orange), var(--crimson), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .cover-tagline {
+    font-size: 16px;
+    color: var(--light-gray);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-version {
+    position: absolute;
+    bottom: 64px;
+    right: 64px;
+    font-size: 11px;
+    color: var(--light-gray);
+    letter-spacing: 0.15em;
+    z-index: 2;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 80px 0;
+    border-bottom: 1px solid #1E1A2A;
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-number {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    color: var(--cream);
+  }
+
+  /* CARDS */
+  .card {
+    background: #13101E;
+    border: 1px solid #1E1A2A;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  .card p { color: #9991AA; font-size: 14px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* COLOR SWATCHES */
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1E1A2A;
+  }
+
+  .swatch-color {
+    height: 100px;
+  }
+
+  .swatch-info {
+    padding: 16px;
+    background: #13101E;
+  }
+
+  .swatch-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .swatch-hex {
+    font-size: 12px;
+    color: var(--light-gray);
+    font-family: monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .swatch-usage {
+    font-size: 11px;
+    color: var(--light-gray);
+    margin-top: 6px;
+  }
+
+  /* GRADIENT BAR */
+  .gradient-bar {
+    height: 80px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #E8A034, #D4431A, #7A1530, #3D1155);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gradient-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 150px;
+    opacity: 0.15;
+  }
+
+  /* TYPOGRAPHY DEMO */
+  .type-demo {
+    background: #13101E;
+    border: 1px solid #1E1A2A;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+
+  .type-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light-gray);
+    margin-bottom: 8px;
+  }
+
+  .t-h1 { font-size: 48px; font-weight: 300; letter-spacing: -0.03em; color: var(--cream); }
+  .t-h2 { font-size: 32px; font-weight: 400; letter-spacing: -0.02em; color: var(--cream); }
+  .t-h3 { font-size: 22px; font-weight: 500; color: var(--cream); }
+  .t-body { font-size: 15px; font-weight: 400; color: #9991AA; line-height: 1.7; }
+  .t-caption { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light-gray); }
+
+  /* LOGO DEMOS */
+  .logo-box {
+    border-radius: 12px;
+    padding: 48px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1E1A2A;
+  }
+
+  .logo-dark { background: var(--black); }
+  .logo-mid { background: var(--mid-gray); }
+  .logo-light { background: var(--cream); }
+
+  .logo-text-gradient {
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--amber), var(--orange), var(--crimson), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-text-white {
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #F5F0E8;
+  }
+
+  .logo-text-dark {
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--black);
+  }
+
+  /* DO / DONT */
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .do-box {
+    background: #0D1A12;
+    border: 1px solid #1A3020;
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .dont-box {
+    background: #1A0D0D;
+    border: 1px solid #301A1A;
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .do-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4CAF7A;
+    margin-bottom: 12px;
+  }
+
+  .dont-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #CF4545;
+    margin-bottom: 12px;
+  }
+
+  .do-box li, .dont-box li {
+    font-size: 13px;
+    color: #9991AA;
+    margin-bottom: 6px;
+    margin-left: 16px;
+  }
+
+  /* VOICE EXAMPLES */
+  .voice-example {
+    background: #13101E;
+    border-left: 2px solid var(--amber);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+
+  .voice-example p { color: var(--cream); font-size: 15px; font-style: italic; }
+  .voice-context { font-size: 11px; color: var(--light-gray); margin-top: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-style: normal !important; }
+
+  /* APP MOCKUP */
+  .app-block {
+    background: #13101E;
+    border: 1px solid #1E1A2A;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .app-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #1E1A2A;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .app-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .app-label { font-size: 12px; color: var(--light-gray); letter-spacing: 0.1em; text-transform: uppercase; }
+  .app-body { padding: 24px; }
+
+  /* POST MOCKUP */
+  .post-mockup {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-gradient-bg {
+    background: 
+      radial-gradient(ellipse at 20% 30%, #E8A03455 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, #3D115555 0%, transparent 50%),
+      var(--black);
+  }
+
+  .post-content { position: relative; z-index: 2; }
+  .post-tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+  .post-headline { font-size: 18px; font-weight: 300; color: var(--cream); line-height: 1.3; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    margin: 32px 0;
+    opacity: 0.3;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    background: #13101E;
+    color: var(--amber);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 1px solid #1E1A2A;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #1A1625;
+    color: #9991AA;
+  }
+
+  td:first-child { color: var(--cream); }
+
+  tr:last-child td { border-bottom: none; }
+
+  .table-wrap {
+    border: 1px solid #1E1A2A;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  /* SPACING */
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--cream);
+    margin: 32px 0 16px;
+  }
+
+  p { color: #9991AA; font-size: 14px; margin-bottom: 12px; }
+
+  ul { margin-left: 20px; margin-bottom: 16px; }
+  ul li { color: #9991AA; font-size: 14px; margin-bottom: 6px; }
+
+  strong { color: var(--cream); font-weight: 600; }
+
+  /* TOC */
+  .toc {
+    background: #13101E;
+    border: 1px solid #1E1A2A;
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #1A1625;
+    font-size: 14px;
+    color: #9991AA;
+  }
+
+  .toc-item:last-child { border-bottom: none; }
+  .toc-num { color: var(--amber); font-size: 12px; }
+
+  /* PAGE BREAK HINT */
+  .section-header-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .section-accent-line {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(180deg, var(--amber), transparent);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .cover { padding: 32px; }
+    .container { padding: 0 24px; }
+    .grid-2, .grid-3, .do-dont { grid-template-columns: 1fr; }
+    .cover-version { right: 32px; bottom: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-gradient"></div>
+  <div class="cover-noise"></div>
+  <div class="cover-content">
+    <div class="cover-label">Brand Guidelines — Version 1.0</div>
+    <div class="cover-wordmark">opus</div>
+    <div class="cover-tagline">Every brand deserves a masterpiece.</div>
+  </div>
+  <div class="cover-version">withopus · 2025</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="container">
+  <div class="section">
+    <div class="section-number">00 — Index</div>
+    <div class="section-title">Contents</div>
+    <div class="toc">
+      <div class="toc-item"><span>Brand Overview</span><span class="toc-num">01</span></div>
+      <div class="toc-item"><span>Logo Guidelines</span><span class="toc-num">02</span></div>
+      <div class="toc-item"><span>Color System</span><span class="toc-num">03</span></div>
+      <div class="toc-item"><span>Typography</span><span class="toc-num">04</span></div>
+      <div class="toc-item"><span>Visual Style</span><span class="toc-num">05</span></div>
+      <div class="toc-item"><span>Social Media Style</span><span class="toc-num">06</span></div>
+      <div class="toc-item"><span>Brand Voice</span><span class="toc-num">07</span></div>
+      <div class="toc-item"><span>Application Examples</span><span class="toc-num">08</span></div>
+    </div>
+  </div>
+
+  <!-- 01 BRAND OVERVIEW -->
+  <div class="section">
+    <div class="section-number">01 — Foundation</div>
+    <div class="section-title">Brand Overview</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Mission</div>
+        <p>To help brands find their creative identity and express it through cinematic, intentional social media content — content that stops the scroll and stays in memory.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Vision</div>
+        <p>To become the go-to content studio for Indian brands and creators who refuse to look like everyone else.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Positioning</div>
+        <p>Opus is a premium social media content agency based in Nagpur. We are not a generic agency. We craft the visual identity and content strategy for brands that have something real to say.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Core Values</div>
+        <p><strong>Craft over speed.</strong> Every post is considered.<br><br>
+        <strong>Warmth over noise.</strong> We don't shout — we draw people in.<br><br>
+        <strong>Minimal over cluttered.</strong> Less, but better.</p>
+      </div>
+    </div>
+
+    <h3>Brand Personality</h3>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Premium</div>
+        <p>We work with brands that value quality. Our output reflects that — no templates, no shortcuts.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Cinematic</div>
+        <p>Everything we create has a film-like warmth and depth. Content that feels like it was directed.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Minimal</div>
+        <p>We believe in the power of empty space. What is NOT on the screen matters as much as what is.</p>
+      </div>
+    </div>
+
+    <h3>Target Audience</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Segment</th><th>Who They Are</th><th>What They Need</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Local D2C Brands</td><td>Small product businesses, clothing, food, lifestyle</td><td>Instagram presence, consistent content</td></tr>
+          <tr><td>Local Businesses</td><td>Cafes, salons, gyms, coaching institutes in Nagpur</td><td>Brand awareness, foot traffic via social</td></tr>
+          <tr><td>Creators</td><td>Personal brands, influencers, educators</td><td>Content strategy, visual identity, reels</td></tr>
+          <tr><td>Early-Stage Startups</td><td>Founders building their brand from scratch</td><td>Full brand content system</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 02 LOGO -->
+  <div class="section">
+    <div class="section-number">02 — Identity</div>
+    <div class="section-title">Logo Guidelines</div>
+
+    <h3>Primary Logo — Gradient Wordmark</h3>
+    <p>The Opus wordmark is set in a clean geometric sans-serif. The gradient flowing left to right — from warm amber through orange and crimson into deep violet — is the core visual signature of the brand.</p>
+
+    <div class="grid-2" style="margin: 24px 0;">
+      <div>
+        <div class="type-label" style="margin-bottom: 8px;">On Dark (Primary Use)</div>
+        <div class="logo-box logo-dark">
+          <div class="logo-text-gradient">opus</div>
+        </div>
+      </div>
+      <div>
+        <div class="type-label" style="margin-bottom: 8px;">On Mid-tone</div>
+        <div class="logo-box logo-mid">
+          <div class="logo-text-white">opus</div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div>
+        <div class="type-label" style="margin-bottom: 8px;">White Version (On Gradient BG)</div>
+        <div class="logo-box" style="background: linear-gradient(135deg, #E8A034, #7A1530, #3D1155);">
+          <div class="logo-text-white">opus</div>
+        </div>
+      </div>
+      <div>
+        <div class="type-label" style="margin-bottom: 8px;">Dark Version (On Light BG)</div>
+        <div class="logo-box logo-light">
+          <div class="logo-text-dark">opus</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Clear Space Rule</h3>
+    <div class="card">
+      <div class="card-title">Minimum Clear Space</div>
+      <p>Always maintain clear space around the logo equal to the height of the lowercase "o". No text, graphics, or decorative elements should enter this zone.</p>
+      <p style="margin-top: 12px;">Minimum size: <strong>80px wide</strong> for digital. <strong>20mm wide</strong> for print.</p>
+    </div>
+
+    <div class="do-dont">
+      <div class="do-box">
+        <div class="do-label">✓ Do</div>
+        <ul>
+          <li>Use gradient version on dark backgrounds</li>
+          <li>Use white version on gradient/colored backgrounds</li>
+          <li>Maintain clear space at all times</li>
+          <li>Use only approved color versions</li>
+          <li>Keep letterforms intact — never stretch or skew</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <div class="dont-label">✗ Don't</div>
+        <ul>
+          <li>Add drop shadows or outer glows to the wordmark</li>
+          <li>Place logo on busy, cluttered backgrounds</li>
+          <li>Change font, weight, or letter spacing</li>
+          <li>Use any other gradient not in the brand system</li>
+          <li>Outline or stroke the letterforms</li>
+          <li>Rotate or skew the wordmark</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 COLOR -->
+  <div class="section">
+    <div class="section-number">03 — Color</div>
+    <div class="section-title">Color System</div>
+
+    <h3>The Opus Gradient — Brand Signature</h3>
+    <p>The gradient is not decoration. It IS the brand. Used consistently, it becomes instantly recognizable across all touchpoints.</p>
+    <div class="gradient-bar"></div>
+
+    <h3>Primary Palette</h3>
+    <div class="grid-3" style="margin-bottom: 32px;">
+      <div class="swatch">
+        <div class="swatch-color" style="background: #0D0B14;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Void Black</div>
+          <div class="swatch-hex">HEX #0D0B14</div>
+          <div class="swatch-hex">RGB 13, 11, 20</div>
+          <div class="swatch-usage">Primary background. All content lives on this.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #E8A034;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Amber</div>
+          <div class="swatch-hex">HEX #E8A034</div>
+          <div class="swatch-hex">RGB 232, 160, 52</div>
+          <div class="swatch-usage">Gradient start. Accent highlights, CTA elements.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #D4431A;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Burnt Orange</div>
+          <div class="swatch-hex">HEX #D4431A</div>
+          <div class="swatch-hex">RGB 212, 67, 26</div>
+          <div class="swatch-usage">Gradient mid. Warm energy moments.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #7A1530;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Crimson</div>
+          <div class="swatch-hex">HEX #7A1530</div>
+          <div class="swatch-hex">RGB 122, 21, 48</div>
+          <div class="swatch-usage">Gradient transition. Deep warmth.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #3D1155;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Deep Violet</div>
+          <div class="swatch-hex">HEX #3D1155</div>
+          <div class="swatch-hex">RGB 61, 17, 85</div>
+          <div class="swatch-usage">Gradient end. Mystery and depth.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #F5F0E8;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Warm Cream</div>
+          <div class="swatch-hex">HEX #F5F0E8</div>
+          <div class="swatch-hex">RGB 245, 240, 232</div>
+          <div class="swatch-usage">All body text. Warmer than pure white.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Secondary / UI Palette</h3>
+    <div class="grid-3">
+      <div class="swatch">
+        <div class="swatch-color" style="background: #13101E;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface Dark</div>
+          <div class="swatch-hex">HEX #13101E</div>
+          <div class="swatch-usage">Card backgrounds. Secondary surfaces.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #2A2535;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface Mid</div>
+          <div class="swatch-hex">HEX #2A2535</div>
+          <div class="swatch-usage">Borders, dividers, hover states.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #6B6478;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Muted Text</div>
+          <div class="swatch-hex">HEX #6B6478</div>
+          <div class="swatch-usage">Secondary text, labels, captions.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Color Usage Rules</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Context</th><th>Background</th><th>Text</th><th>Accent</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Instagram Posts</td><td>#0D0B14 Void Black</td><td>#F5F0E8 Cream</td><td>Amber gradient</td></tr>
+          <tr><td>Reels / Video</td><td>Black with gradient bloom</td><td>White</td><td>Gradient overlay</td></tr>
+          <tr><td>Website</td><td>#0D0B14 primary</td><td>#F5F0E8 body</td><td>Amber #E8A034</td></tr>
+          <tr><td>Documents / Proposals</td><td>White / Cream</td><td>#0D0B14</td><td>Gradient header</td></tr>
+          <tr><td>Stories</td><td>Gradient bloom background</td><td>White</td><td>Cream</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Accessibility</h3>
+    <div class="card">
+      <div class="card-title">Contrast Notes</div>
+      <p><strong>#F5F0E8 on #0D0B14</strong> — Passes WCAG AA (contrast ratio ~14:1). Always use this combination for body text.</p>
+      <p><strong>Amber #E8A034 on #0D0B14</strong> — Use for accent and highlight text only, not long-form reading.</p>
+      <p>Never place gradient text on gradient backgrounds. Always ensure minimum 4.5:1 contrast ratio for any readable text.</p>
+    </div>
+  </div>
+
+  <!-- 04 TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-number">04 — Typography</div>
+    <div class="section-title">Type System</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Primary — Satoshi</div>
+        <p>Used for all headings, logo wordmark, display text. Clean geometric sans-serif with modern proportions. Available free at fontshare.com</p>
+        <p style="margin-top: 12px;"><strong>Weights used:</strong> 300 Light, 400 Regular, 500 Medium</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Secondary — Inter</div>
+        <p>Used for body copy, captions, UI text, long-form reading. Highly legible at small sizes. Available free via Google Fonts.</p>
+        <p style="margin-top: 12px;"><strong>Weights used:</strong> 400 Regular, 500 Medium</p>
+      </div>
+    </div>
+
+    <h3>Type Hierarchy</h3>
+
+    <div class="type-demo">
+      <div class="type-label">H1 — Display / Hero</div>
+      <div class="t-h1">Every brand deserves an opus.</div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--light-gray);">Satoshi Light 300 · 48–80px · Letter-spacing -0.03em</div>
+    </div>
+
+    <div class="type-demo">
+      <div class="type-label">H2 — Section Heading</div>
+      <div class="t-h2">What we do for your brand</div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--light-gray);">Satoshi Regular 400 · 28–36px · Letter-spacing -0.02em</div>
+    </div>
+
+    <div class="type-demo">
+      <div class="type-label">H3 — Sub Heading</div>
+      <div class="t-h3">Social Media Content</div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--light-gray);">Satoshi Medium 500 · 18–22px · Letter-spacing 0</div>
+    </div>
+
+    <div class="type-demo">
+      <div class="type-label">Body — Paragraph</div>
+      <div class="t-body">We create intentional content that builds real brand equity. Not just posts — a visual language your audience recognises instantly across every platform.</div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--light-gray);">Inter Regular 400 · 14–16px · Line-height 1.7</div>
+    </div>
+
+    <div class="type-demo">
+      <div class="type-label">Caption / Label</div>
+      <div class="t-caption">Social Media · Content Strategy · Brand Identity</div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--light-gray);">Inter 400 · 11–12px · Letter-spacing 0.15–0.25em · All caps</div>
+    </div>
+
+    <h3>Typography Rules</h3>
+    <div class="do-dont">
+      <div class="do-box">
+        <div class="do-label">✓ Do</div>
+        <ul>
+          <li>Use light weight (300) for large display text</li>
+          <li>Keep headline copy short and punchy</li>
+          <li>Use generous line-height for body text (1.6–1.8)</li>
+          <li>Apply wide letter-spacing to uppercase labels</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <div class="dont-label">✗ Don't</div>
+        <ul>
+          <li>Use bold (700+) weight for headings — too aggressive</li>
+          <li>Mix more than 2 fonts in a single design</li>
+          <li>Use all-caps for body paragraphs</li>
+          <li>Use script or decorative fonts anywhere</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 VISUAL STYLE -->
+  <div class="section">
+    <div class="section-number">05 — Aesthetics</div>
+    <div class="section-title">Visual Style</div>
+
+    <div class="card">
+      <div class="card-title">Core Visual Direction</div>
+      <p><strong>Warm Cinematic Minimalism.</strong> Every Opus visual is built around three pillars: warmth (the amber-to-violet gradient), texture (grain overlay that gives organic depth), and space (intentional emptiness that makes content breathe).</p>
+    </div>
+
+    <h3>Gradient Texture — The Signature Element</h3>
+    <div class="card">
+      <div class="card-title">How to Apply</div>
+      <p>The grainy gradient bloom is Opus's most distinctive visual element. It appears in:</p>
+      <ul style="margin-top: 12px;">
+        <li>Hero/cover images — full bleed gradient with grain</li>
+        <li>Post backgrounds — subtle gradient bloom in corners</li>
+        <li>Reel intros/outros — gradient as motion element</li>
+        <li>Website hero section — large format gradient background</li>
+      </ul>
+      <p style="margin-top: 12px;"><strong>Grain intensity:</strong> 4–8% opacity noise overlay. Enough to feel organic, not enough to look degraded.</p>
+    </div>
+
+    <h3>Photography & Image Style</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Lighting</div>
+        <p>Warm, directional light sources. Golden hour aesthetic. Avoid cold/blue-tinted photography. Images should feel like they belong in the same warm universe as the brand palette.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Composition</div>
+        <p>Generous negative space. Subject often off-center. Dark backgrounds where possible. Avoid overcrowded, busy compositions — every visual element should earn its place.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Editing Style</div>
+        <p>Slightly desaturated except warm tones. Lifted blacks (not pure black). Warm shadows. Subtle film grain in photography to match brand texture system.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">What to Avoid</div>
+        <p>Stock photo aesthetic. Overly bright, HDR images. Cold blue-white color grading. Busy flat-lay compositions. Anything that looks corporate or generic.</p>
+      </div>
+    </div>
+
+    <h3>Icon Style</h3>
+    <div class="card">
+      <div class="card-title">Icon Guidelines</div>
+      <p><strong>Style:</strong> Thin line icons only. 1–1.5px stroke weight. Rounded line caps. No filled/solid icons.</p>
+      <p style="margin-top: 8px;"><strong>Color:</strong> Cream #F5F0E8 on dark backgrounds. Amber #E8A034 for highlighted/active states.</p>
+      <p style="margin-top: 8px;"><strong>Size:</strong> Minimum 20px. Preferred 24px for UI use.</p>
+    </div>
+  </div>
+
+  <!-- 06 SOCIAL MEDIA -->
+  <div class="section">
+    <div class="section-number">06 — Social</div>
+    <div class="section-title">Social Media Style</div>
+
+    <h3>Instagram Post Grid</h3>
+    <div class="grid-3">
+      <div class="post-mockup post-gradient-bg">
+        <div class="post-content">
+          <div class="post-tag">Brand Identity</div>
+          <div class="post-headline">Your brand has a story. We find it.</div>
+        </div>
+      </div>
+      <div class="post-mockup" style="background: var(--black); border: 1px solid #1E1A2A;">
+        <div class="post-content">
+          <div class="post-tag">Content Strategy</div>
+          <div class="post-headline">Consistency isn't about posting more. It's about saying less, better.</div>
+        </div>
+      </div>
+      <div class="post-mockup" style="background: linear-gradient(135deg, #13101E 0%, #2A1040 100%);">
+        <div class="post-content">
+          <div class="post-tag">Opus</div>
+          <div class="post-headline">Every brand deserves an opus.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Post Layout Rules</h3>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Size</th><th>Safe Zone</th><th>Text Rule</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Feed Post (Square)</td><td>1080 × 1080px</td><td>80px all sides</td><td>Max 3 lines headline</td></tr>
+          <tr><td>Carousel Slide</td><td>1080 × 1080px</td><td>80px all sides</td><td>One idea per slide</td></tr>
+          <tr><td>Reel Cover</td><td>1080 × 1920px</td><td>120px sides, 200px top/bottom</td><td>Short title only</td></tr>
+          <tr><td>Story</td><td>1080 × 1920px</td><td>150px all sides</td><td>Max 5 words</td></tr>
+          <tr><td>LinkedIn Banner</td><td>1584 × 396px</td><td>100px all sides</td><td>Wordmark + tagline</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Content Tone</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">For Opus Own Content</div>
+        <p>Provocative but minimal. Say one thing per post. Lead with insight, not promotion. Never explain the joke. Trust the audience to connect the dots.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">For Client Content</div>
+        <p>Adapt to client's voice while maintaining Opus visual standards. Every client's content should look like it belongs in the same premium universe — even if the tone changes.</p>
+      </div>
+    </div>
+
+    <h3>Reel Style</h3>
+    <div class="card">
+      <div class="card-title">Motion Guidelines</div>
+      <p><strong>Transitions:</strong> Slow dissolves, warm light wipes, gradient sweeps. Avoid hard cuts in brand content.</p>
+      <p style="margin-top: 8px;"><strong>Pacing:</strong> Slow and deliberate. Let frames breathe. Match the minimal brand energy.</p>
+      <p style="margin-top: 8px;"><strong>Text animation:</strong> Fade up from below. No bouncy, springy animations — too playful for the brand.</p>
+      <p style="margin-top: 8px;"><strong>Color grading:</strong> Warm shadows, desaturated cool tones, match the amber-violet brand palette.</p>
+    </div>
+  </div>
+
+  <!-- 07 BRAND VOICE -->
+  <div class="section">
+    <div class="section-number">07 — Voice</div>
+    <div class="section-title">Brand Voice</div>
+
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div class="card">
+        <div class="card-title">Opus sounds like</div>
+        <p>Confident. Direct. Thoughtful. A creative who knows their craft and doesn't need to prove it. Warm but not soft. Premium but not arrogant.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Opus never sounds like</div>
+        <p>A generic agency. Buzzword-heavy. Over-explaining. Loud or sales-y. Corporate. Trying too hard to be cool or relatable.</p>
+      </div>
+    </div>
+
+    <h3>Voice Principles</h3>
+    <div class="card">
+      <div class="card-title">Short over long</div>
+      <p>If it can be said in 5 words, don't use 10. Every word must earn its place. Captions, headlines, taglines — always trim ruthlessly.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Show, don't explain</div>
+      <p>Don't write "we create premium content." Show a piece of premium content. Don't say "we're different." Let the work prove it.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Confident, not arrogant</div>
+      <p>State things. Don't qualify, hedge, or add "we think" to every sentence. Own the perspective.</p>
+    </div>
+
+    <h3>Voice Examples</h3>
+
+    <div class="voice-example">
+      <p>"Most brands post content. We build identity."</p>
+      <div class="voice-context">Instagram caption — brand awareness post</div>
+    </div>
+    <div class="voice-example">
+      <p>"Your brand already has a story. We just find the right frame."</p>
+      <div class="voice-context">Website hero tagline</div>
+    </div>
+    <div class="voice-example">
+      <p>"Not every brand needs more content. Some just need better content."</p>
+      <div class="voice-context">LinkedIn post</div>
+    </div>
+    <div class="voice-example">
+      <p>"This is what happens when you stop trying to look like everyone else."</p>
+      <div class="voice-context">Reel caption — case study</div>
+    </div>
+    <div class="voice-example">
+      <p>"Good content doesn't shout. It stays."</p>
+      <div class="voice-context">Instagram carousel — opening slide</div>
+    </div>
+
+    <h3>Never Say</h3>
+    <div class="dont-box" style="margin-top: 16px;">
+      <div class="dont-label">✗ Avoid These</div>
+      <ul>
+        <li>"We are a one-stop solution for all your digital marketing needs"</li>
+        <li>"Taking your brand to the next level"</li>
+        <li>"Best-in-class content creation services"</li>
+        <li>"We are passionate about helping brands grow"</li>
+        <li>Excessive use of emojis in brand communication</li>
+        <li>"Affordable packages starting at..."</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 08 APPLICATION -->
+  <div class="section">
+    <div class="section-number">08 — Applications</div>
+    <div class="section-title">Brand in Use</div>
+
+    <h3>Instagram Profile</h3>
+    <div class="card">
+      <div class="card-title">Profile Setup</div>
+      <p><strong>Handle:</strong> @withopus</p>
+      <p><strong>Name:</strong> Opus — Content Studio</p>
+      <p><strong>Bio:</strong> Cinematic content for brands that mean it. · Nagpur, India · withopus.in</p>
+      <p><strong>Profile photo:</strong> Gradient bloom mark or white wordmark on black circle</p>
+      <p><strong>Highlights:</strong> Covers use gradient bloom background with white label text</p>
+    </div>
+
+    <h3>Website</h3>
+    <div class="app-block">
+      <div class="app-header">
+        <div class="app-dot" style="background: #CF4545;"></div>
+        <div class="app-dot" style="background: #E8A034;"></div>
+        <div class="app-dot" style="background: #4CAF7A;"></div>
+        <div class="app-label" style="margin-left: 8px;">withopus.in</div>
+      </div>
+      <div class="app-body">
+        <div style="margin-bottom: 8px;"><span class="t-caption">Navigation:</span> <span style="color: #6B6478; font-size: 13px;">opus · Work · About · Contact</span></div>
+        <div class="t-h2" style="margin: 16px 0 8px;">Every brand deserves an opus.</div>
+        <div class="t-body" style="max-width: 480px;">We create cinematic social media content for brands that refuse to look like everyone else.</div>
+        <div style="margin-top: 20px; padding: 12px 24px; background: linear-gradient(90deg, #E8A034, #7A1530); border-radius: 6px; display: inline-block; font-size: 13px; font-weight: 500; color: white; cursor: pointer;">Start a Project</div>
+      </div>
+    </div>
+
+    <h3>Client Proposal / Deck</h3>
+    <div class="card">
+      <div class="card-title">Document Standards</div>
+      <p><strong>Cover:</strong> Full gradient bloom background, white wordmark, project name in Satoshi Light</p>
+      <p><strong>Internal pages:</strong> White/cream background, dark text, amber accents for section numbers</p>
+      <p><strong>Email signature:</strong> opus · withopus.in · hello@withopus.in — no images, plain text only</p>
+    </div>
+
+    <h3>Business Card (When Ready)</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Front</div>
+        <p>Black card. Gradient wordmark centered. Nothing else.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Back</div>
+        <p>Name, role, email, handle — in cream Satoshi 300. Left-aligned. Generous white space.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="section" style="border-bottom: none;">
+    <div class="gradient-bar" style="margin-bottom: 32px;"></div>
+    <div style="text-align: center; padding: 48px 0;">
+      <div class="cover-wordmark" style="font-size: 48px; text-align: center;">opus</div>
+      <p style="margin-top: 16px; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-gray);">Brand Guidelines v1.0 · withopus · 2025</p>
+      <p style="margin-top: 8px; font-size: 13px; color: var(--light-gray);">This document is confidential and intended for internal and partner use only.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

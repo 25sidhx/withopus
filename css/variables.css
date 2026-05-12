@@ -1,0 +1,47 @@
+:root {
+  /* ── Colors ── */
+  --void: #0D0B14;
+  --void-2: #13101E;
+  --void-3: #2A2535;
+  --amber: #E8A034;
+  --orange: #D4431A;
+  --crimson: #7A1530;
+  --violet: #3D1155;
+  --cream: #F5F0E8;
+  --muted: #6B6478;
+
+  /* ── Gradient ── */
+  --gradient: linear-gradient(90deg, #E8A034, #D4431A, #7A1530, #3D1155);
+  --gradient-45: linear-gradient(45deg, #E8A034, #D4431A, #7A1530, #3D1155);
+  --gradient-135: linear-gradient(135deg, #E8A034, #D4431A, #7A1530, #3D1155);
+  --gradient-bloom: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,160,52,0.18) 0%, rgba(122,21,48,0.12) 40%, transparent 70%);
+
+  /* ── Glow tokens ── */
+  --glow-amber: rgba(232,160,52,0.12);
+  --glow-crimson: rgba(122,21,48,0.08);
+  --glow-violet: rgba(61,17,85,0.1);
+
+  /* ── Typography ── */
+  --font-heading: 'Satoshi', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Spacing ── */
+  --safe: clamp(24px, 6vw, 96px);
+  --section-gap: clamp(80px, 14vw, 180px);
+  --section-gap-sm: clamp(48px, 8vw, 100px);
+  --gutter: clamp(16px, 3vw, 40px);
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-slow: 1.2s;
+  --duration-med: 0.7s;
+  --duration-fast: 0.35s;
+
+  /* ── Radius ── */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+}

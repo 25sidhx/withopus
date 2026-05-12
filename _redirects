@@ -1,0 +1,7 @@
+# Netlify Redirects
+
+# Redirect /lander to the homepage
+/lander  /  301
+
+# Redirect www to apex (Netlify usually handles this, but explicit is safer)
+https://www.withopus.in/*  https://withopus.in/:splat  301!

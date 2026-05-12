@@ -64,42 +64,7 @@ spline-viewer::part(interaction-prompt) { display: none !important; }
 /* ── Mobile ──────────────────────────────────── */
 @media (max-width: 860px) {
   .hero-orb {
-    position: absolute;
-    right: auto;
-    left: 50%;
-    top: auto;
-    /* Push lower so the center of the sphere (where hint text lives) is below fold */
-    bottom: -10vh;
-    transform: translateX(-50%);
-    width: 110vw;
-    height: 55vh;
-    /* Stay BEHIND all hero content */
-    z-index: 0;
-    opacity: 0;
-    animation: orb-appear-mobile 2.2s var(--ease-out) 1.2s forwards;
-
-    /* Fade from all edges so particles feel atmospheric */
-    -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 75%, black 5%, transparent 60%);
-    mask-image: radial-gradient(ellipse 85% 70% at 50% 75%, black 5%, transparent 60%);
-  }
-
-  @keyframes orb-appear-mobile {
-    from { opacity: 0; }
-    to   { opacity: 0.45; }
-  }
-
-  /* Block "Move your mouse" — covers the center of the orb where hint text renders */
-  .hero-orb::after {
-    background:
-      /* Radial block over the orb center where hint text appears */
-      radial-gradient(ellipse 60% 30% at 50% 40%, rgba(13,11,20,0.95) 0%, transparent 70%),
-      /* Bottom fade to blend into page */
-      linear-gradient(to top, var(--void) 0%, rgba(13,11,20,0.6) 25%, transparent 55%);
-  }
-
-  /* Spline is purely decorative on mobile — disable all interaction */
-  .hero-orb spline-viewer {
-    pointer-events: none !important;
+    display: none !important;
   }
 
   .hero-content {

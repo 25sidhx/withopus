@@ -18,10 +18,19 @@ body {
   cursor: none;
 }
 
-a { text-decoration: none; color: inherit; }
+a { text-decoration: none; color: inherit; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
 img, video { display: block; max-width: 100%; }
-button { border: none; background: none; cursor: none; font-family: inherit; }
+button { border: none; background: none; cursor: none; font-family: inherit; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
 ul { list-style: none; }
+
+/* ── iOS Tactile Compensation ── */
+@media (pointer: coarse) {
+  a:active, button:active, .nav-cta:active, .hero-cta-primary:active, .pitch-cta:active {
+    transform: scale(0.96) !important;
+    opacity: 0.8 !important;
+    transition: transform 0.05s ease-out, opacity 0.05s ease-out !important;
+  }
+}
 
 /* ── Grain Overlay ── */
 .grain-overlay {

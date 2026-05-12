@@ -35,6 +35,8 @@
 spline-viewer::part(logo) { display: none !important; }
 spline-viewer::part(hint) { display: none !important; }
 spline-viewer::part(watermark) { display: none !important; }
+spline-viewer::part(interaction-hint) { display: none !important; }
+spline-viewer::part(interaction-prompt) { display: none !important; }
 
 /* Nuclear fallback: opaque overlay blocks any Spline UI text on mobile */
 .hero-orb::after {

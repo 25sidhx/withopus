@@ -53,6 +53,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const primaryCta = document.querySelector('.hero-cta-primary');
 if (primaryCta) {
   primaryCta.addEventListener('mousemove', e => {
+    if (window.innerWidth <= 768) return;
     const rect = primaryCta.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
@@ -61,6 +62,7 @@ if (primaryCta) {
     primaryCta.style.transform = `scale(1.02) rotateX(${-dy * 4}deg) rotateY(${dx * 4}deg)`;
   });
   primaryCta.addEventListener('mouseleave', () => {
+    if (window.innerWidth <= 768) return;
     primaryCta.style.transform = '';
   });
 }
@@ -68,12 +70,14 @@ if (primaryCta) {
 /* ── Work card tilt ── */
 document.querySelectorAll('.work-card').forEach(card => {
   card.addEventListener('mousemove', e => {
+    if (window.innerWidth <= 768) return;
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg) scale(0.98)`;
   });
   card.addEventListener('mouseleave', () => {
+    if (window.innerWidth <= 768) return;
     card.style.transform = '';
   });
 });
@@ -89,6 +93,7 @@ document.querySelectorAll('.philosophy-item').forEach(item => {
 const hero = document.querySelector('.hero');
 if (hero) {
   hero.addEventListener('mousemove', e => {
+    if (window.innerWidth <= 768) return;
     const rect = hero.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;

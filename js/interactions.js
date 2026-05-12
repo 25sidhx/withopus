@@ -109,3 +109,37 @@ if (hero) {
     }
   });
 }
+
+/* ── Spline UI Overrides (Shadow DOM) ── */
+// Forcefully remove the interaction prompt from the spline-viewer shadow DOM 
+// because CSS ::part() fails if Spline doesn't expose those elements as parts.
+const splineViewer = document.querySelector('spline-viewer');
+if (splineViewer) {
+  const killSplineUI = () => {
+    if (splineViewer.shadowRoot) {
+      // Find the interaction prompt container (usually an absolute div over the canvas)
+      const prompt = splineViewer.shadowRoot.querySelector('#interaction-prompt') || 
+                     splineViewer.shadowRoot.querySelector('.interaction-prompt') ||
+                     splineViewer.shadowRoot.querySelector('[id*="prompt"]');
+      if (prompt) {
+        prompt.style.display = 'none';
+        prompt.style.opacity = '0';
+        prompt.style.pointerEvents = 'none';
+      }
+      
+      const hint = splineViewer.shadowRoot.querySelector('#hint') || 
+                   splineViewer.shadowRoot.querySelector('.hint') ||
+                   splineViewer.shadowRoot.querySelector('[id*="hint"]');
+      if (hint) {
+        hint.style.display = 'none';
+      }
+    }
+  };
+
+  // Run immediately and also on a short interval until it's loaded
+  killSplineUI();
+  const uiInterval = setInterval(killSplineUI, 500);
+  
+  // Stop checking after 10 seconds (assuming it loaded by then)
+  setTimeout(() => clearInterval(uiInterval), 10000);
+}

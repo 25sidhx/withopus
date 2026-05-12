@@ -6,7 +6,7 @@
 ## 1. Brand Overview
 
 - **Name:** Opus
-- **Handle:** @withopus
+- **Handle:** @with_opus
 - **Domain:** withopus.in
 - **Business Email:** hello@withopus.in
 - **Location:** Nagpur, India
@@ -418,7 +418,7 @@ Before finalizing any copy for Opus, ask:
 
 ### Brand Context Summary (Quick Reference)
 ```
-Name: Opus | Handle: @withopus | Location: Nagpur, India
+Name: Opus | Handle: @with_opus | Location: Nagpur, India
 Type: Social media content agency
 Vibe: Warm Cinematic Minimalism
 Colors: #0D0B14 bg | #E8A034 amber | #D4431A orange | #7A1530 crimson | #3D1155 violet | #F5F0E8 cream

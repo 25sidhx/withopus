@@ -1,196 +1,110 @@
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ──────────────────────────────────────────────────────────
+   BASE — Dark Cinematic Foundation (design-spells & magic-animator)
+   Accessibility: All drawer inputs use <label>, placeholder, and aria-label in HTML.
+   ───────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--void);
-  color: var(--cream);
   font-family: var(--font-body);
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   overflow-x: hidden;
-  cursor: none;
 }
 
-a { text-decoration: none; color: inherit; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
-img, video { display: block; max-width: 100%; }
-button { border: none; background: none; cursor: none; font-family: inherit; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
-ul { list-style: none; }
-
-/* ── iOS Tactile Compensation ── */
-@media (pointer: coarse) {
-  a:active, button:active, .nav-cta:active, .hero-cta-primary:active, .pitch-cta:active {
-    transform: scale(0.96) !important;
-    opacity: 0.8 !important;
-    transition: transform 0.05s ease-out, opacity 0.05s ease-out !important;
-  }
+/* ── Selection ── */
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
 
-/* ── Grain Overlay ── */
-.grain-overlay {
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  will-change: transform; /* PERF-01: promote to GPU compositor layer */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  animation: grain 0.6s steps(2) infinite;
+/* ── Links ── */
+a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
-@keyframes grain {
-  0%   { transform: translate(0,0); }
-  25%  { transform: translate(-3%, -4%); }
-  50%  { transform: translate(4%, 3%); }
-  75%  { transform: translate(-2%, 5%); }
-  100% { transform: translate(5%, -2%); }
+a:hover {
+  color: var(--accent);
 }
 
-/* ── Custom Cursor ── */
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--amber);
-  pointer-events: none;
-  z-index: 10000;
-  transition: transform 0.1s var(--ease-out);
-  transform: translate(-50%, -50%);
+/* ── Images ── */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(232,160,52,0.45);
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.35s var(--ease-out), width 0.3s, height 0.3s, border-color 0.3s;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-ring.hovered {
-  width: 52px; height: 52px;
-  border-color: rgba(232,160,52,0.9);
-}
-
-/* ── Utility ── */
-.section {
-  padding: var(--section-gap) var(--safe);
-  position: relative;
-  /* Offset for fixed nav so anchor links don't hide content */
-  scroll-margin-top: 90px;
-}
-
-.section-eyebrow {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 1.5rem;
-}
-
-.section-title {
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  letter-spacing: -0.025em;
-  line-height: 1.1;
-  color: var(--cream);
-  margin-bottom: 0.25rem;
-}
-
-.section-title .accent {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Reveal Animations ── */
+/* ── Scroll Reveal Base (magic-animator) ── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transform: translateY(40px);
+  transition: opacity var(--dur-reveal) var(--ease-out),
+              transform var(--dur-reveal) var(--ease-out);
 }
 
-.reveal.in-view {
+.reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.22s; }
-.reveal-delay-3 { transition-delay: 0.36s; }
-.reveal-delay-4 { transition-delay: 0.5s; }
-.reveal-delay-5 { transition-delay: 0.64s; }
-
-/* ── Gradient text ── */
-.gradient-text {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ── Section Label Style (Fragment Mono) ── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
 }
 
-/* ── Accent link (used inline) ── */
-.accent-link {
-  color: var(--amber);
-  text-decoration: none;
-  transition: color 0.3s var(--ease-out);
+/* ── Section Heading ── */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
-.accent-link:hover { color: var(--cream); }
+/* ── Body Text ── */
+.body-text {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 65ch;
+}
 
 /* ── Divider ── */
 .divider {
   width: 100%;
   height: 1px;
-  background: var(--void-3);
+  background: var(--border-subtle);
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--void); }
-::-webkit-scrollbar-thumb { background: var(--void-3); border-radius: 2px; }
-
-/* ── Focus (accessible, on-brand) ── */
-:focus-visible {
-  outline: 1px solid rgba(232,160,52,0.5);
-  outline-offset: 3px;
-  border-radius: var(--r-sm);
-}
-
-/* ── Utility: section subtitle ── */
-.section-subtitle {
-  font-size: 0.875rem;
-  color: var(--muted);
-  margin-top: 0.75rem;
-  line-height: 1.65;
-}
-
-/* ── Selection ── */
-::selection {
-  background: rgba(232,160,52,0.25);
-  color: var(--cream);
-}
-
-/* ── UX-01: Touch / coarse pointer — restore native cursor, hide custom ── */
-@media (pointer: coarse) {
-  body, button { cursor: auto; }
-  .cursor-dot, .cursor-ring { display: none !important; }
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
 }

@@ -61,4 +61,67 @@ if (dot && ring) {
     dot.style.opacity  = '1';
     ring.style.opacity = '1';
   });
+
+  /* ── Cursor Trail Particles (Hero Section Only) ── */
+  const heroSection = document.getElementById('hero');
+  const particles = [];
+  const maxParticles = 8;
+  let lastSpawn = 0;
+  let particleIndex = 0;
+
+  // Create particle pool container
+  const poolContainer = document.createElement('div');
+  poolContainer.className = 'cursor-particle-pool';
+  poolContainer.style.pointerEvents = 'none';
+  poolContainer.style.position = 'fixed';
+  poolContainer.style.inset = 0;
+  poolContainer.style.zIndex = '9997';
+  document.body.appendChild(poolContainer);
+
+  for (let i = 0; i < maxParticles; i++) {
+    const p = document.createElement('div');
+    p.className = 'cursor-particle';
+    p.style.opacity = '0';
+    poolContainer.appendChild(p);
+    particles.push({
+      el: p,
+      active: false
+    });
+  }
+
+  function spawnParticle(x, y) {
+    if (typeof anime === 'undefined') return;
+    const now = performance.now();
+    if (now - lastSpawn < 30) return; // spawn throttle for buttery performance
+    lastSpawn = now;
+
+    const p = particles[particleIndex];
+    p.active = true;
+    p.el.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%)) scale(1)`;
+    p.el.style.opacity = '0.6';
+
+    // Cancel active animations on this element
+    anime.remove(p.el);
+    anime({
+      targets: p.el,
+      scale: [1, 0.15],
+      opacity: [0.6, 0],
+      translateX: anime.random(-15, 15),
+      translateY: anime.random(-15, 15),
+      duration: 750,
+      easing: 'easeOutQuad',
+      complete: () => {
+        p.active = false;
+      }
+    });
+
+    particleIndex = (particleIndex + 1) % maxParticles;
+  }
+
+  if (heroSection) {
+    heroSection.addEventListener('mousemove', e => {
+      if (!isCursorVisible) return;
+      spawnParticle(e.clientX, e.clientY);
+    }, { passive: true });
+  }
 }

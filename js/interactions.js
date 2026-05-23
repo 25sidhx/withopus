@@ -1,138 +1,370 @@
-/* interactions.js — pricing accordion, nav, micro-interactions */
+/* ──────────────────────────────────────────────────────────
+   INTERACTIONS — Premium Editorial OPUS
+   Applying: animejs-animation, design-spells, magic-animator
+   ───────────────────────────────────────────────────────── */
 
-/* ── Pricing accordion ── */
-function activatePriceItem(item) {
-  const header = item.querySelector('.price-header');
-  item.classList.add('open');
-  if (header) header.setAttribute('aria-expanded', 'true');
-}
-function deactivatePriceItem(item) {
-  const header = item.querySelector('.price-header');
-  item.classList.remove('open');
-  if (header) header.setAttribute('aria-expanded', 'false');
-}
+(function () {
+  'use strict';
 
-document.querySelectorAll('.price-header').forEach(header => {
-  // BUG-07 FIX: keyboard support — Enter and Space activate accordion
-  function handleToggle() {
-    const item = header.closest('.price-item');
-    const isOpen = item.classList.contains('open');
+  // ── UTILITIES ──
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-    // Close all
-    document.querySelectorAll('.price-item').forEach(i => deactivatePriceItem(i));
+  // ── NAV: Scroll-direction hide/show + frosted glass ──
+  const navbar = $('#navbar');
+  const navToggle = $('#nav-toggle');
+  const navLinks = $('#nav-links');
+  let lastScroll = 0;
 
-    // BUG-04 FIX: toggle aria-expanded in sync with visual state
-    if (!isOpen) activatePriceItem(item);
+  function handleNavScroll() {
+    const y = window.scrollY;
+    if (y > 80) {
+      navbar.classList.add('scrolled');
+      if (y > lastScroll + 5 && y > 200) {
+        navbar.classList.add('hidden');
+      } else if (y < lastScroll - 5) {
+        navbar.classList.remove('hidden');
+      }
+    } else {
+      navbar.classList.remove('scrolled');
+      navbar.classList.remove('hidden');
+    }
+    lastScroll = y;
   }
 
-  header.addEventListener('click', handleToggle);
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
 
-  header.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleToggle();
-    }
-  });
-});
+  // ── NAV: Mobile toggle ──
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
 
-/* Open first by default */
-const firstPriceItem = document.querySelector('.price-item');
-if (firstPriceItem) activatePriceItem(firstPriceItem);
+    $$('.nav-link', navLinks).forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
 
-/* ── Smooth anchor scroll (override native) ── */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
+  // ── HERO: Premium Asymmetric Typography Stagger (anime.js) ──
+  function animateHero() {
+    const displayTexts = $$('.hero-display-text');
+    if (!displayTexts.length || typeof anime === 'undefined') return;
 
-/* ── Hero CTA hover tilt effect ── */
-const primaryCta = document.querySelector('.hero-cta-primary');
-if (primaryCta) {
-  primaryCta.addEventListener('mousemove', e => {
-    if (window.innerWidth <= 768) return;
-    const rect = primaryCta.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    primaryCta.style.transform = `scale(1.02) rotateX(${-dy * 4}deg) rotateY(${dx * 4}deg)`;
-  });
-  primaryCta.addEventListener('mouseleave', () => {
-    if (window.innerWidth <= 768) return;
-    primaryCta.style.transform = '';
-  });
-}
+    // Split text into wrapped letter spans for high-end cinematic entry
+    displayTexts.forEach(headline => {
+      const text = headline.textContent.trim();
+      headline.innerHTML = text.split('').map(letter => {
+        return `<span class="letter" style="display:inline-block;opacity:0;transform:translateY(60px);will-change:transform,opacity;">${letter}</span>`;
+      }).join('');
+    });
 
-/* ── Work card tilt ── */
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    if (window.innerWidth <= 768) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg) scale(0.98)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    if (window.innerWidth <= 768) return;
-    card.style.transform = '';
-  });
-});
+    // Master timelines with custom cubic-bezier curves
+    const tl = anime.timeline({
+      easing: 'cubicBezier(0.16, 1, 0.3, 1)'
+    });
 
-/* ── Philosophy item hover sound (visual pulse) ── */
-document.querySelectorAll('.philosophy-item').forEach(item => {
-  item.addEventListener('mouseenter', () => {
-    item.style.transition = 'background 0.5s var(--ease-out)';
-  });
-});
+    tl.add({
+      targets: '.hero-display-text[data-anime="studio"] .letter',
+      opacity: [0, 1],
+      translateY: [60, 0],
+      delay: anime.stagger(45),
+      duration: 900
+    })
+    .add({
+      targets: '.hero-display-text[data-anime="opus"] .letter',
+      opacity: [0, 1],
+      translateY: [60, 0],
+      delay: anime.stagger(45),
+      duration: 900
+    }, '-=700')
+    .add({
+      targets: '.hero-wavy-card',
+      opacity: [0, 1],
+      scale: [0.85, 1],
+      rotate: [-3, 0],
+      duration: 1200,
+      easing: 'cubicBezier(0.34, 1.56, 0.64, 1)' // Custom elastic spring feel
+    }, '-=750')
+    .add({
+      targets: ['.hero-label', '.hero-nav-links a'],
+      opacity: [0, 1],
+      translateY: [15, 0],
+      delay: anime.stagger(80),
+      duration: 600
+    }, '-=900')
+    .add({
+      targets: ['.hero-editorial-desc', '.hero-editorial-cta-wrap', '.hero-scroll'],
+      opacity: [0, 1],
+      translateY: [20, 0],
+      delay: anime.stagger(100),
+      duration: 700
+    }, '-=600');
+  }
 
-/* ── Ambient gradient mouse follow on hero ── */
-const hero = document.querySelector('.hero');
-if (hero) {
-  hero.addEventListener('mousemove', e => {
-    if (window.innerWidth <= 768) return;
-    const rect = hero.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const heroBg = hero.querySelector('.hero-bg');
-    if (heroBg) {
-      heroBg.style.background = `
-        radial-gradient(ellipse 60% 50% at ${x}% ${y + 20}%,
-          rgba(232,160,52,0.16) 0%,
-          rgba(212,67,26,0.1) 35%,
-          rgba(122,21,48,0.06) 60%,
-          transparent 80%)
-      `;
-    }
-  });
-}
+  // ── SERVICES: Collapsible Division Accordions ──
+  function initServicesAccordion() {
+    const headers = $$('.service-accordion-header');
 
-/* ── Spline UI Overrides (Shadow DOM) ── */
-// Forcefully remove the interaction prompt from the spline-viewer shadow DOM 
-// by injecting a <style> tag directly into it.
-const splineViewer = document.querySelector('spline-viewer');
-if (splineViewer) {
-  const injectStyle = () => {
-    if (splineViewer.shadowRoot && !splineViewer.shadowRoot.querySelector('#opus-spline-override')) {
-      const style = document.createElement('style');
-      style.id = 'opus-spline-override';
-      style.textContent = `
-        #interaction-prompt, .interaction-prompt, #hint, .hint { 
-          display: none !important; 
-          opacity: 0 !important; 
-          pointer-events: none !important; 
-          visibility: hidden !important;
+    headers.forEach((header) => {
+      header.addEventListener('click', () => {
+        const item = header.closest('.service-accordion-item');
+        const content = item.querySelector('.service-accordion-content');
+        const isActive = item.classList.contains('active');
+
+        // Close all other open panels first
+        $$('.service-accordion-item.active').forEach((activeItem) => {
+          if (activeItem !== item) {
+            activeItem.classList.remove('active');
+            activeItem.querySelector('.service-accordion-content').style.maxHeight = '0';
+          }
+        });
+
+        // Toggle state of current panel
+        if (isActive) {
+          item.classList.remove('active');
+          content.style.maxHeight = '0';
+        } else {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
         }
-      `;
-      splineViewer.shadowRoot.appendChild(style);
-    }
-  };
+      });
+    });
+  }
 
-  // The shadow root might not be immediately ready or might be rebuilt
-  injectStyle();
-  const uiInterval = setInterval(injectStyle, 500);
-  setTimeout(() => clearInterval(uiInterval), 10000);
-}
+  // ── PROCESS: Bento Hover Interactions & Glows ──
+  function initProcessHovers() {
+    const cards = $$('.process-card');
+    cards.forEach((card) => {
+      const dot = card.querySelector('.process-dot');
+      const isOriginallyActive = dot && dot.classList.contains('active');
+
+      card.addEventListener('mouseenter', () => {
+        if (dot) dot.classList.add('active');
+        anime({
+          targets: card,
+          translateY: -8,
+          scale: 1.015,
+          borderColor: 'rgba(255, 255, 255, 0.28)',
+          backgroundColor: '#1b1b1b',
+          duration: 350,
+          easing: 'cubicBezier(0.16, 1, 0.3, 1)'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (dot && !isOriginallyActive) {
+          dot.classList.remove('active');
+        }
+        anime({
+          targets: card,
+          translateY: 0,
+          scale: 1,
+          borderColor: 'rgba(255, 255, 255, 0.12)',
+          backgroundColor: '#161616',
+          duration: 350,
+          easing: 'cubicBezier(0.16, 1, 0.3, 1)'
+        });
+      });
+    });
+  }
+
+  // ── SCROLL REVEAL (IntersectionObserver) ──
+  function initScrollReveal() {
+    const reveals = $$('.reveal');
+    if (!reveals.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+  }
+
+  // ── STATS COUNTER (anime.js) ──
+  function initStatsCounter() {
+    const statNumbers = $$('.stat-number[data-target]');
+    if (!statNumbers.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.dataset.target);
+            const suffix = el.dataset.suffix || '';
+            const decimals = parseInt(el.dataset.decimals || '0', 10);
+
+            const counter = { val: 0 };
+            anime({
+              targets: counter,
+              val: target,
+              easing: 'easeOutExpo',
+              duration: 2000,
+              round: decimals === 0 ? 1 : false,
+              update: () => {
+                el.textContent = decimals > 0
+                  ? counter.val.toFixed(decimals) + suffix
+                  : Math.round(counter.val) + suffix;
+              },
+            });
+
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    statNumbers.forEach((el) => observer.observe(el));
+  }
+
+  // ── FAQ ACCORDION ──
+  function initFAQ() {
+    const questions = $$('.faq-question');
+
+    questions.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        // Close all others
+        $$('.faq-item.open').forEach((openItem) => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            openItem.querySelector('.faq-answer').style.maxHeight = '0';
+          }
+        });
+
+        // Toggle current
+        if (isOpen) {
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          answer.style.maxHeight = '0';
+        } else {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  // ── PROJECT HOVER: Scale + Overlay ──
+  function initProjectHovers() {
+    const projects = $$('.project-item');
+    projects.forEach((item) => {
+      item.addEventListener('mouseenter', () => {
+        if (typeof anime !== 'undefined') {
+          anime({
+            targets: item.querySelector('.project-bg'),
+            scale: 1.04,
+            duration: 500,
+            easing: 'cubicBezier(0.16, 1, 0.3, 1)'
+          });
+        }
+      });
+      item.addEventListener('mouseleave', () => {
+        if (typeof anime !== 'undefined') {
+          anime({
+            targets: item.querySelector('.project-bg'),
+            scale: 1,
+            duration: 500,
+            easing: 'cubicBezier(0.16, 1, 0.3, 1)'
+          });
+        }
+      });
+    });
+  }
+
+  // ── SMOOTH SCROLL for anchor links ──
+  function initSmoothScroll() {
+    $$('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const targetStr = a.getAttribute('href');
+        if (targetStr === '#') return;
+        const target = document.querySelector(targetStr);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  // ── ACTIVE NAV LINK HIGHLIGHT ──
+  function initActiveNavHighlight() {
+    const sections = $$('section[id]');
+    const navLinkEls = $$('.nav-link');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinkEls.forEach((link) => {
+              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  // ── CONTACT FORM HANDLER ──
+  function initContactForm() {
+    const form = $('#contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      const originalText = btn.textContent;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      // Simulate send
+      setTimeout(() => {
+        btn.textContent = 'Sent! ✓';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }, 1200);
+    });
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', () => {
+    animateHero();
+    initScrollReveal();
+    initStatsCounter();
+    initServicesAccordion();
+    initProcessHovers();
+    initFAQ();
+    initProjectHovers();
+    initSmoothScroll();
+    initActiveNavHighlight();
+    initContactForm();
+  });
+})();

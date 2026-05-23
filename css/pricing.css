@@ -1,145 +1,157 @@
-/* ─────────────────────────────────────
-   PRICING  — editorial menu style
-───────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────
+   PRICING — Dark Cinematic (design-spells & magic-animator)
+   Accessibility: All drawer inputs use <label>, placeholder, and aria-label in HTML.
+   ───────────────────────────────────────────────────────── */
+
 .pricing {
   padding: var(--section-gap) var(--safe);
-  border-top: 1px solid var(--void-3);
+  border-top: 1px solid var(--border-subtle);
 }
 
-.pricing-heading {
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  letter-spacing: -0.025em;
-  color: var(--cream);
+.pricing-inner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.pricing-sub {
-  font-size: 0.875rem;
-  color: var(--muted);
-  margin-top: 0.75rem;
+.pricing-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.pricing-tier {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+
+.pricing-tier:hover {
+  border-color: var(--border-default);
+  transform: translateY(-4px);
+}
+
+.pricing-tier.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 60px var(--accent-glow-20);
+  position: relative;
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: var(--r-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pricing-name {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-tertiary);
   letter-spacing: 0.02em;
 }
 
-.pricing-menu {
-  margin-top: 4rem;
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
-.price-item {
-  border-bottom: 1px solid var(--void-3);
+.pricing-price span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-tertiary);
 }
 
-.price-item:first-child {
-  border-top: 1px solid var(--void-3);
-}
-
-.price-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem 0;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.3s;
-}
-
-.price-header::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0;
-  width: 0; height: 1px;
-  background: var(--gradient);
-  transition: width 0.5s var(--ease-out);
-}
-
-.price-item.open .price-header::after,
-.price-header:hover::after { width: 100%; }
-
-.price-label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--cream);
-  transition: color 0.3s;
-}
-
-.price-header:hover .price-label,
-.price-item.open .price-label {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.price-right {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.price-value {
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: clamp(1.4rem, 3vw, 2.25rem);
-  letter-spacing: -0.025em;
-  color: var(--cream);
-}
-
-.price-toggle {
-  width: 24px; height: 24px;
-  border: 1px solid var(--void-3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.pricing-desc {
   font-size: 14px;
-  color: var(--muted);
-  transition: all 0.35s var(--ease-out);
-  flex-shrink: 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.price-item.open .price-toggle {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: rotate(45deg);
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.price-inclusions {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.55s var(--ease-out);
-}
-
-.price-item.open .price-inclusions {
-  max-height: 500px;
-}
-
-.inclusions-list {
-  padding: 0 0 2.5rem 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem 2rem;
-}
-
-.inclusions-list li {
-  font-size: 0.875rem;
-  color: var(--muted);
+.pricing-feature {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-.inclusions-list li::before {
-  content: '';
-  width: 16px;
-  height: 1px;
-  background: var(--amber);
+.pricing-feature-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
   flex-shrink: 0;
 }
 
-@media (max-width: 520px) {
-  .inclusions-list { grid-template-columns: 1fr; }
-  .price-right { gap: 1rem; }
+.pricing-cta {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  padding: 14px 24px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  text-align: center;
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+  text-decoration: none;
+  display: block;
+  margin-top: auto;
 }
+
+.pricing-cta:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.pricing-tier.featured .pricing-cta {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.pricing-tier.featured .pricing-cta:hover {
+  background: #0040e0;
+  box-shadow: 0 4px 20px var(--accent-glow-40);
+}
+
+@media (max-width: 1024px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }

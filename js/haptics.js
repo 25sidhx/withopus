@@ -13,24 +13,170 @@
   const loader  = document.getElementById('opus-loader');
   if (!loader) return;
 
+  // Cancel CSS safety-net animations — JS is running, we'll handle reveal
+  loader.style.animation = 'none';
+  document.querySelectorAll('.hero-headline, .hero-eyebrow, .hero-sub, .hero-ctas').forEach(function(el) {
+    el.style.animation = 'none';
+  });
+
   const lineEl  = loader.querySelector('.loader-line');
   const countEl = loader.querySelector('.loader-count');
 
-  let count = 0;
-  const interval = setInterval(() => {
-    count += Math.floor(Math.random() * 14) + 6;
-    if (count >= 100) { count = 100; clearInterval(interval); }
-    if (countEl) countEl.textContent = count + '%';
-    if (lineEl)  lineEl.style.width  = count + '%';
-    if (count === 100) {
-      setTimeout(() => {
-        loader.style.transition = 'opacity 0.9s cubic-bezier(0.7,0,0.84,0), transform 0.9s cubic-bezier(0.7,0,0.84,0)';
-        loader.style.opacity    = '0';
-        loader.style.transform  = 'translateY(-10px)';
-        setTimeout(() => { loader.style.display = 'none'; }, 950);
-      }, 250);
+  // Emergency fallback: if the loader is still visible after 5s, force-kill it
+  const emergencyTimeout = setTimeout(function() {
+    forceReveal();
+  }, 5000);
+
+  function forceReveal() {
+    clearTimeout(emergencyTimeout);
+    loader.style.opacity = '0';
+    loader.style.pointerEvents = 'none';
+    setTimeout(function() { loader.style.display = 'none'; }, 600);
+    // Force-reveal all hero elements
+    ['.hero-headline', '.hero-eyebrow', '.hero-sub', '.hero-ctas',
+     '.scroll-hint', '.trust-bar', '.nav-brand', '.nav-links', '.nav-cta'].forEach(function(sel) {
+      var el = document.querySelector(sel);
+      if (el) { el.style.opacity = '1'; el.style.transform = 'none'; }
+    });
+    // Also reveal hero-letters if they were split
+    document.querySelectorAll('.hero-letter').forEach(function(l) {
+      l.style.opacity = '1'; l.style.transform = 'none';
+    });
+  }
+
+  try {
+    let count = 0;
+    const interval = setInterval(() => {
+      count += Math.floor(Math.random() * 12) + 5;
+      if (count >= 100) { count = 100; clearInterval(interval); }
+      if (countEl) countEl.textContent = count + '%';
+      if (lineEl)  lineEl.style.width  = count + '%';
+      if (count === 100) {
+        clearInterval(interval);
+        setTimeout(triggerOpusReveal, 200);
+      }
+    }, 25);
+  } catch (e) {
+    forceReveal();
+    return;
+  }
+
+  function triggerOpusReveal() {
+    clearTimeout(emergencyTimeout);
+
+    try {
+    // Character split of Hero Headline
+    const headline = document.querySelector('.hero-headline');
+    if (headline) {
+      let html = '';
+      headline.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          html += node.textContent.split('').map(char => 
+            char === ' ' ? ' ' : `<span class="hero-letter" style="display:inline-block; opacity:0; transform:translateY(24px);">${char}</span>`
+          ).join('');
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.tagName === 'BR') {
+            html += '<br>';
+          } else if (node.classList.contains('gradient-word')) {
+            html += `<span class="gradient-word">` + node.textContent.split('').map(char =>
+              char === ' ' ? ' ' : `<span class="hero-letter" style="display:inline-block; opacity:0; transform:translateY(24px);">${char}</span>`
+            ).join('') + `</span>`;
+          } else {
+            html += node.outerHTML;
+          }
+        }
+      });
+      headline.innerHTML = html;
     }
-  }, 30);
+
+    // Set initial opacity and transforms for other entering elements to avoid flash
+    const heroEyebrow = document.querySelector('.hero-eyebrow');
+    const heroSub = document.querySelector('.hero-sub');
+    const heroCtas = document.querySelector('.hero-ctas');
+    const scrollHint = document.querySelector('.scroll-hint');
+    const trustBar = document.querySelector('.trust-bar');
+    const navBrand = document.querySelector('.nav-brand');
+    const navLinks = document.querySelector('.nav-links');
+    const navCta = document.querySelector('.nav-cta');
+
+    if (heroEyebrow) { heroEyebrow.style.opacity = '0'; heroEyebrow.style.transform = 'translateY(16px)'; }
+    if (heroSub) { heroSub.style.opacity = '0'; heroSub.style.transform = 'translateY(16px)'; }
+    if (heroCtas) { heroCtas.style.opacity = '0'; heroCtas.style.transform = 'translateY(16px)'; }
+    if (scrollHint) { scrollHint.style.opacity = '0'; scrollHint.style.transform = 'translateY(12px)'; }
+    if (trustBar) { trustBar.style.opacity = '0'; trustBar.style.transform = 'translateY(12px)'; }
+    if (navBrand) { navBrand.style.opacity = '0'; navBrand.style.transform = 'translateY(-12px)'; }
+    if (navLinks) { navLinks.style.opacity = '0'; navLinks.style.transform = 'translateY(-12px)'; }
+    if (navCta) { navCta.style.opacity = '0'; navCta.style.transform = 'translateY(-12px)'; }
+
+    const tl = anime.timeline({
+      easing: 'easeOutQuart'
+    });
+
+    tl.add({
+      targets: '#opus-loader .loader-logo',
+      scale: [1, 1.08],
+      opacity: [1, 0],
+      duration: 650,
+      easing: 'easeOutQuad'
+    })
+    .add({
+      targets: '#opus-loader .loader-bar, #opus-loader .loader-count',
+      opacity: [1, 0],
+      duration: 400
+    }, '-=500')
+    .add({
+      targets: '#opus-loader',
+      translateY: '-100%',
+      duration: 1000,
+      easing: 'spring(1, 80, 13, 0)',
+      complete: () => {
+        loader.style.display = 'none';
+      }
+    }, '-=250')
+    .add({
+      targets: ['.nav-brand', '.nav-links', '.nav-cta'],
+      opacity: [0, 1],
+      translateY: [-12, 0],
+      duration: 700,
+      delay: anime.stagger(100),
+      easing: 'easeOutQuad'
+    }, '-=800')
+    .add({
+      targets: '.hero-eyebrow',
+      opacity: [0, 1],
+      translateY: [16, 0],
+      duration: 700,
+      easing: 'easeOutQuad'
+    }, '-=700')
+    .add({
+      targets: '.hero-headline .hero-letter',
+      opacity: [0, 1],
+      translateY: [24, 0],
+      duration: 900,
+      easing: 'spring(1, 85, 12, 0)',
+      delay: anime.stagger(22)
+    }, '-=650')
+    .add({
+      targets: ['.hero-sub', '.hero-ctas'],
+      opacity: [0, 1],
+      translateY: [16, 0],
+      duration: 900,
+      easing: 'spring(1, 85, 12, 0)',
+      delay: anime.stagger(120)
+    }, '-=700')
+    .add({
+      targets: ['.scroll-hint', '.trust-bar'],
+      opacity: [0, 1],
+      translateY: [12, 0],
+      duration: 800,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(120)
+    }, '-=600');
+
+    } catch (e) {
+      forceReveal();
+    }
+  }
 })();
 
 

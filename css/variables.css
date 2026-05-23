@@ -1,47 +1,57 @@
 :root {
-  /* ── Colors ── */
-  --void: #0D0B14;
-  --void-2: #13101E;
-  --void-3: #2A2535;
-  --amber: #E8A034;
-  --orange: #D4431A;
-  --crimson: #7A1530;
-  --violet: #3D1155;
-  --cream: #F5F0E8;
-  --muted: #6B6478;
+  /* ── Light Editorial & High-Contrast Dark Palette (OPUS Framer Match) ── */
+  --bg-primary: #ffffff;          /* Pure white background (Hero base) */
+  --bg-secondary: #f3f3f1;        /* Warm light gray/cream (Intro & Services base) */
+  --bg-dark: #0a0a0a;             /* Rich black (Process & Footer base) */
+  --bg-dark-card: #161616;        /* Sleek card elements inside dark sections */
+  --bg-elevated: #ffffff;         /* Pure white elevated cards for high-contrast */
+  --bg-surface: #ffffff;          /* Surface background */
+  
+  --text-primary: #000000;        /* Sharp high-contrast black for headings */
+  --text-secondary: rgba(0, 0, 0, 0.65); /* Elegant dark gray for body text */
+  --text-tertiary: rgba(0, 0, 0, 0.4);  /* Subtle text / label elements */
+  --text-light: #f3f3f1;          /* Off-white primary text in dark sections */
+  --text-light-muted: rgba(243, 243, 241, 0.6); /* Muted body text in dark sections */
 
-  /* ── Gradient ── */
-  --gradient: linear-gradient(90deg, #E8A034, #D4431A, #7A1530, #3D1155);
-  --gradient-45: linear-gradient(45deg, #E8A034, #D4431A, #7A1530, #3D1155);
-  --gradient-135: linear-gradient(135deg, #E8A034, #D4431A, #7A1530, #3D1155);
-  --gradient-bloom: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,160,52,0.18) 0%, rgba(122,21,48,0.12) 40%, transparent 70%);
+  --border-subtle: rgba(0, 0, 0, 0.08); /* Hairline gray dividers in light sections */
+  --border-default: rgba(0, 0, 0, 0.15); /* Default borders in light sections */
+  --border-dark: rgba(255, 255, 255, 0.12); /* Hairline borders inside dark sections */
 
-  /* ── Glow tokens ── */
-  --glow-amber: rgba(232,160,52,0.12);
-  --glow-crimson: rgba(122,21,48,0.08);
-  --glow-violet: rgba(61,17,85,0.1);
+  /* ── Accent (Electric Blue — Maestro Color Ban Compliant) ── */
+  --accent: #0048f9;              /* Vibrant cobalt blue */
+  --accent-glow-20: rgba(0, 72, 249, 0.08); /* Soft hover state glow */
+  --accent-glow-40: rgba(0, 72, 249, 0.18); /* Active hover state glow */
 
-  /* ── Typography ── */
-  --font-heading: 'Satoshi', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* ── Glass & Overlay Tokens ── */
+  --glass-nav: rgba(255, 255, 255, 0.85);  /* Nav backdrop for light theme */
+  --glass-nav-dark: rgba(10, 10, 10, 0.85); /* Nav backdrop inside dark sections */
+  --glass-overlay: rgba(0, 0, 0, 0.3);      /* Overlay backdrop */
+  --glass-blur: 20px;
+
+  /* ── Typography (Satoshi / Onest Display scale) ── */
+  --font-display: 'Onest', system-ui, sans-serif;
+  --font-body: 'Inter', 'Inter Placeholder', system-ui, sans-serif;
+  --font-mono: 'Fragment Mono', 'Courier New', monospace;
+  --font-ui: 'Manrope', 'Inter', system-ui, sans-serif;
+
+  /* ── Radius System (Framer OPUS style) ── */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 24px;
+  --r-pill: 34px;
+  --r-full: 100px;
 
   /* ── Spacing ── */
-  --safe: clamp(24px, 6vw, 96px);
-  --section-gap: clamp(80px, 14vw, 180px);
-  --section-gap-sm: clamp(48px, 8vw, 100px);
-  --gutter: clamp(16px, 3vw, 40px);
+  --safe: clamp(20px, 4vw, 60px);
+  --section-gap: clamp(80px, 12vh, 160px);
 
-  /* ── Motion ── */
+  /* ── Motion (magic-animator tokens) ── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --duration-slow: 1.2s;
-  --duration-med: 0.7s;
-  --duration-fast: 0.35s;
-
-  /* ── Radius ── */
-  --r-sm: 4px;
-  --r-md: 8px;
-  --r-lg: 16px;
-  --r-pill: 999px;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.25s;
+  --dur-base: 0.4s;
+  --dur-slow: 0.6s;
+  --dur-reveal: 0.8s;
 }

@@ -1,48 +1,48 @@
 :root {
-  /* ── Deep Obsidian & High-Contrast Cinematic Dark Palette (OPUS Temple Mode) ── */
-  --bg-primary: #060606;          /* Deep rich obsidian black */
-  --bg-secondary: #0c0c0d;        /* Matte dark steel gray (for subtle section contrast) */
-  --bg-dark: #060606;             /* Core background */
-  --bg-dark-card: #121213;        /* Sleek card elements */
-  --bg-elevated: #18181a;         /* Elevated surface elements */
-  --bg-surface: #0a0a0a;          /* Surface backgrounds */
+  /* ── Deep Obsidian & High-Contrast Cinematic Dark Palette (OPUS Warm Temple Mode) ── */
+  --bg-primary: #0d0b14;          /* Deep rich Void Black background */
+  --bg-secondary: #13101e;        /* Matte Surface Dark for section contrast */
+  --bg-dark: #0d0b14;             /* Core background */
+  --bg-dark-card: #13101e;        /* Sleek card elements (Surface Dark) */
+  --bg-elevated: #2a2535;         /* Elevated surface elements (Surface Mid) */
+  --bg-surface: #0d0b14;          /* Surface backgrounds */
   
-  --text-primary: #ffffff;        /* Pure white for bold, sharp editorial typography */
-  --text-secondary: rgba(255, 255, 255, 0.7); /* Lighter gray for beautiful, breathable body copy */
-  --text-tertiary: rgba(255, 255, 255, 0.45); /* Technical label muted texts */
-  --text-light: #ffffff;          /* Universal light text compatibility */
-  --text-light-muted: rgba(255, 255, 255, 0.55);
+  --text-primary: #f5f0e8;        /* Warm Cream for bold, sharp editorial typography */
+  --text-secondary: rgba(245, 240, 232, 0.7); /* Breathable warm cream body copy */
+  --text-tertiary: rgba(245, 240, 232, 0.45); /* Technical label muted texts */
+  --text-light: #f5f0e8;          /* Universal light text compatibility */
+  --text-light-muted: rgba(245, 240, 232, 0.55);
  
-  --border-subtle: rgba(255, 255, 255, 0.05); /* Hairline dividers for ultra-sleek structural framing */
-  --border-default: rgba(255, 255, 255, 0.12); /* Standard modular borders */
-  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(245, 240, 232, 0.05); /* Hairline dividers for ultra-sleek structural framing */
+  --border-default: rgba(245, 240, 232, 0.12); /* Standard modular borders */
+  --border-dark: rgba(245, 240, 232, 0.08);
 
-  /* ── Accent System (Framer Cherry Red & Volumetric Gold-Amber) ── */
-  --accent: #eb4d6d;              /* Vibrant Framer Cherry Red signature signature */
-  --accent-amber: #d4af37;        /* Volumetric classic gold/amber for high-tech alerts */
-  --accent-glow-20: rgba(235, 77, 109, 0.08); /* Prismatic halo glow */
-  --accent-glow-40: rgba(235, 77, 109, 0.18); 
+  /* ── Accent System (Warm Amber & Volumetric Burnt Orange / Crimson Glow) ── */
+  --accent: #e8a034;              /* Vibrant Amber brand color */
+  --accent-amber: #d4431a;        /* Burnt Orange accent color */
+  --accent-glow-20: rgba(232, 160, 52, 0.08); /* Amber prismatic halo glow */
+  --accent-glow-40: rgba(232, 160, 52, 0.18); 
 
   /* ── Glass & Overlay Tokens (Frosted OS HUD) ── */
-  --glass-nav: rgba(6, 6, 6, 0.75);       /* Frosted glass operating system HUD */
-  --glass-nav-dark: rgba(6, 6, 6, 0.75);  /* Synced drawer backs */
-  --glass-overlay: rgba(0, 0, 0, 0.75);   /* Heavy ambient backdrops */
+  --glass-nav: rgba(13, 11, 20, 0.85);   /* Frosted glass Void Black HUD */
+  --glass-nav-dark: rgba(13, 11, 20, 0.85); /* Synced drawer backs */
+  --glass-overlay: rgba(13, 11, 20, 0.75); /* Heavy ambient backdrops */
   --glass-blur: 24px;
 
-  /* ── Typography (Onest Display scale & Fragment Mono) ── */
-  --font-display: 'Onest', system-ui, sans-serif;
-  --font-body: 'Inter', 'Inter Placeholder', system-ui, sans-serif;
+  /* ── Typography (Satoshi Display scale & Fragment Mono) ── */
+  --font-display: 'Satoshi', 'Onest', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'Fragment Mono', 'Courier New', monospace;
-  --font-ui: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-ui: 'Inter', 'Manrope', system-ui, sans-serif;
 
-  /* ── Radius System (Sleek Brutalist Rounded-Edge corners) ── */
-  --r-xs: 4px;
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 20px;
-  --r-xl: 24px;
-  --r-pill: 34px;
-  --r-full: 100px;
+  /* ── Radius System (Sleek Brutalist Sharp edges - Design Mandate) ── */
+  --r-xs: 0px;
+  --r-sm: 0px;
+  --r-md: 2px;
+  --r-lg: 2px;
+  --r-xl: 4px;
+  --r-pill: 9999px;
+  --r-full: 9999px;
 
   /* ── Spacing ── */
   --safe: clamp(24px, 5vw, 80px);

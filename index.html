@@ -112,12 +112,12 @@
   }
   </script>
 
-  <!-- Fonts: Onest, Fragment Mono, Inter, Manrope -->
+  <!-- Fonts: Satoshi, Onest, Fragment Mono, Inter, Manrope -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@400;500;600&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://api.fontshare.com">
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=manrope@500,600&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=manrope@500,600&f[]=satoshi@300,400,500&display=swap">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/variables.css?v=2.1">
@@ -136,6 +136,15 @@
 </head>
 <body>
 
+  <!-- Global SVG Film Grain Overlay -->
+  <svg id="film-grain-svg" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; pointer-events:none; opacity:0.04; mix-blend-mode:overlay;">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+  </svg>
+
   <!-- ═══ NAVIGATION ═══ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -143,13 +152,7 @@
         <span class="nav-logo-text">WITH OPUS</span>
       </a>
 
-      <div class="nav-hud-meta">
-        <span class="hud-tag">OPUS_OS: ACTIVE</span>
-        <span class="hud-separator">//</span>
-        <span class="hud-time" id="hud-time">--:--:--</span>
-        <span class="hud-separator">//</span>
-        <span class="hud-tag">21.14N 79.08E</span>
-      </div>
+      <!-- HUD telemetry cleaned up -->
 
       <ul class="nav-links" id="nav-links">
         <li><a href="#intro" class="nav-link">About</a></li>
@@ -172,10 +175,10 @@
   <section class="hero" id="hero">
     <div class="hero-inner">
       <div class="hero-left">
-        <span class="hero-label-badge font-mono reveal">[ OPUS_ARCHIVE: COGNITIVE_VISUAL_MONUMENTS ]</span>
-        <h1 class="hero-display-text reveal" data-anime="withopus">
-          <span class="hero-row text-glitch" data-text="VISUAL">VISUAL</span>
-          <span class="hero-row font-mono text-accent">MONUMENTS</span>
+
+        <h1 class="hero-display-text reveal" data-anime="withopus" aria-label="Visual Monuments">
+          <span class="hero-row text-glitch" data-text="VISUAL" aria-hidden="true">VISUAL</span>
+          <span class="hero-row font-mono text-accent" aria-hidden="true">MONUMENTS</span>
         </h1>
         <p class="hero-editorial-desc reveal">
           We believe in visual immortality. In a digital wilderness of generic templates and high-volume noise, we construct cinematic archives, custom-engineered identity interfaces, and high-contrast motion grids for brands that refuse to be forgotten.
@@ -198,10 +201,7 @@
             <div class="portal-core">
               <div class="core-inner"></div>
             </div>
-            <div class="portal-specs">
-              <div class="spec-line font-mono">SYS_CORE: OPERATIVE</div>
-              <div class="spec-line font-mono">SYS_LOC: 21.14N 79.08E</div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -238,11 +238,7 @@
               <div class="server-concentric ring-1"></div>
               <div class="server-concentric ring-2"></div>
               <div class="server-emitter"></div>
-              <div class="server-telemetry">
-                <div class="telemetry-row font-mono"><span>SYSTEM:</span><span>OPUS_CORE_v2.0</span></div>
-                <div class="telemetry-row font-mono"><span>STATUS:</span><span>ONLINE_SPRINT</span></div>
-                <div class="telemetry-row font-mono"><span>COORDS:</span><span>NGP_21.14_79.08</span></div>
-              </div>
+
             </div>
           </div>
         </div>
@@ -309,7 +305,7 @@
               <span class="service-tag">Visual Lever</span>
             </div>
             <div class="service-trigger">
-              <span class="trigger-icon">+</span>
+              <span class="trigger-icon"></span>
             </div>
           </div>
           <div class="service-accordion-content">
@@ -341,7 +337,7 @@
               <span class="service-tag">Full-Stack Build</span>
             </div>
             <div class="service-trigger">
-              <span class="trigger-icon">+</span>
+              <span class="trigger-icon"></span>
             </div>
           </div>
           <div class="service-accordion-content">
@@ -373,7 +369,7 @@
               <span class="service-tag">Video Production</span>
             </div>
             <div class="service-trigger">
-              <span class="trigger-icon">+</span>
+              <span class="trigger-icon"></span>
             </div>
           </div>
           <div class="service-accordion-content">
@@ -405,7 +401,7 @@
               <span class="service-tag">Animation</span>
             </div>
             <div class="service-trigger">
-              <span class="trigger-icon">+</span>
+              <span class="trigger-icon"></span>
             </div>
           </div>
           <div class="service-accordion-content">
@@ -432,17 +428,15 @@
   </section>
 
   <!-- ═══ PROJECTS ═══ -->
-  <!-- ═══ PROJECTS ═══ -->
   <section class="projects" id="projects">
-    <div class="projects-spiral-viewport">
+    <div class="projects-horizontal-viewport">
       <div class="projects-header-sticky">
-        <span class="section-label">(03) Selected Work</span>
-        <h2 class="section-heading">Kinetic Brand Helix</h2>
-        <p class="section-subheading">Scroll or swipe down to fly through our design archive (randomized on reload)</p>
+        <span class="section-label">(03) Brand Artifacts</span>
+        <h2 class="section-heading">THE MONUMENTAL ARCHIVE</h2>
       </div>
       
-      <div class="projects-spiral-track" id="spiral-track">
-        <!-- Generates dynamically like a genius via interactions.js -->
+      <div class="projects-horizontal-track" id="horizontal-track">
+        <!-- Generates dynamically side-by-side via interactions.js -->
       </div>
     </div>
   </section>
@@ -686,20 +680,20 @@
         <div class="form-row">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" class="form-input" placeholder="Your name" aria-label="Your name">
+            <input type="text" id="name" class="form-input" placeholder="Your name" aria-label="Your name" autocomplete="name">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" class="form-input" placeholder="you@company.com" aria-label="Your email">
+            <input type="email" id="email" class="form-input" placeholder="you@company.com" aria-label="Your email" autocomplete="email">
           </div>
         </div>
         <div class="form-group">
           <label for="subject">Subject</label>
-          <input type="text" id="subject" class="form-input" placeholder="What's this about?" aria-label="Subject">
+          <input type="text" id="subject" class="form-input" placeholder="What's this about?" aria-label="Subject" autocomplete="off">
         </div>
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your project..." aria-label="Your message"></textarea>
+          <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your project..." aria-label="Your message" autocomplete="off"></textarea>
         </div>
         <button type="submit" class="form-submit">Send Message</button>
       </form>

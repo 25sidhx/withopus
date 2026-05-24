@@ -1,11 +1,11 @@
 /* ──────────────────────────────────────────────────────────
-   PRICING — Dark Cinematic (design-spells & magic-animator)
-   Accessibility: All drawer inputs use <label>, placeholder, and aria-label in HTML.
+   PRICING — Warm Cinematic Modern-Brutalist Tiers
    ───────────────────────────────────────────────────────── */
 
 .pricing {
   padding: var(--section-gap) var(--safe);
   border-top: 1px solid var(--border-subtle);
+  background: var(--bg-primary);
 }
 
 .pricing-inner {
@@ -21,34 +21,35 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
   align-items: start;
   padding-top: 16px;
 }
 
 .pricing-tier {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--r-lg);
-  padding: 40px 32px;
+  background: var(--bg-dark-card); /* Surface Dark */
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md); /* Sharp 2px geometry */
+  padding: 48px 36px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
   transition: border-color var(--dur-base) var(--ease-out),
               box-shadow var(--dur-base) var(--ease-out),
               transform var(--dur-base) var(--ease-out);
+  position: relative;
 }
 
 .pricing-tier:hover {
-  border-color: var(--border-default);
-  transform: translateY(-4px);
+  border-color: var(--accent); /* Amber hover border */
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 .pricing-tier.featured {
   border-color: var(--accent);
   box-shadow: 0 0 60px var(--accent-glow-20);
-  position: relative;
-  overflow: visible;
+  background: linear-gradient(180deg, #181525 0%, #13101e 100%); /* Volumetric glow backdrop */
 }
 
 .pricing-badge {
@@ -57,27 +58,28 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent);
-  color: #fff;
-  font-family: var(--font-ui);
-  font-size: 11px;
+  color: #0d0b14; /* Void Black text for high-contrast */
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 600;
-  padding: 4px 16px;
-  border-radius: var(--r-full);
+  padding: 4px 14px;
+  border-radius: var(--r-md);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
 .pricing-name {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--text-tertiary);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .pricing-price {
   font-family: var(--font-display);
-  font-size: 42px;
-  font-weight: 600;
+  font-size: 46px;
+  font-weight: 400; /* Light/Regular Satoshi Display */
   color: var(--text-primary);
   letter-spacing: -0.02em;
   line-height: 1;
@@ -101,7 +103,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .pricing-feature {
@@ -113,9 +115,9 @@
 }
 
 .pricing-feature-icon {
-  width: 18px;
-  height: 18px;
-  color: var(--accent);
+  width: 16px;
+  height: 16px;
+  color: var(--accent); /* Amber feature icon */
   flex-shrink: 0;
 }
 
@@ -127,7 +129,7 @@
   background: transparent;
   border: 1px solid var(--border-default);
   padding: 14px 24px;
-  border-radius: var(--r-full);
+  border-radius: var(--r-md); /* Sharp geometry */
   cursor: pointer;
   text-align: center;
   transition: background var(--dur-fast) var(--ease-out),
@@ -139,7 +141,7 @@
 }
 
 .pricing-cta:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(245, 240, 232, 0.06);
   border-color: var(--text-primary);
   color: var(--text-primary);
 }
@@ -147,12 +149,14 @@
 .pricing-tier.featured .pricing-cta {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: #0d0b14; /* Void Black text */
 }
 
 .pricing-tier.featured .pricing-cta:hover {
-  background: #0040e0;
-  box-shadow: 0 4px 20px var(--accent-glow-40);
+  background: var(--accent-amber); /* Burnt Orange on hover */
+  border-color: var(--accent-amber);
+  color: #f5f0e8; /* Warm Cream text on burnt orange background */
+  box-shadow: 0 4px 20px rgba(212, 67, 26, 0.3);
 }
 
 @media (max-width: 1024px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }

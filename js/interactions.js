@@ -11,49 +11,8 @@
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   /* ═══════════════════════════════════════════════════════
-     1. CUSTOM CURSOR — Magnetic + Glow Trail
+     1. CUSTOM CURSOR - Removed to restore default browser cursor
      ═══════════════════════════════════════════════════════ */
-  function initCustomCursor() {
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-
-    const cursor = document.createElement('div');
-    cursor.className = 'custom-cursor';
-    const cursorDot = document.createElement('div');
-    cursorDot.className = 'custom-cursor-dot';
-    document.body.appendChild(cursor);
-    document.body.appendChild(cursorDot);
-
-    let mx = 0, my = 0, cx = 0, cy = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursorDot.style.left = mx + 'px';
-      cursorDot.style.top = my + 'px';
-    });
-
-    function lerpCursor() {
-      cx += (mx - cx) * 0.12;
-      cy += (my - cy) * 0.12;
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
-      requestAnimationFrame(lerpCursor);
-    }
-    lerpCursor();
-
-    // Magnetic pull on interactive elements
-    const magnets = $$('a, button, .project-item, .process-card, .pricing-tier, .testimonial-item, .service-accordion-header');
-    magnets.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-hover');
-        cursorDot.classList.add('cursor-hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-hover');
-        cursorDot.classList.remove('cursor-hover');
-      });
-    });
-  }
 
   /* ═══════════════════════════════════════════════════════
      2. NAVBAR — Scroll-direction hide/show + frosted glass + dark-mode aware
@@ -118,10 +77,14 @@
     // Split each display row into letter spans to preserve line breaks
     displayRows.forEach(row => {
       const text = row.textContent.trim();
-      row.innerHTML = text.split('').map(letter => {
-        if (letter === ' ') return '&nbsp;';
-        return `<span class="letter" style="display:inline-block;opacity:0;transform:translateY(80px) rotateX(-40deg);will-change:transform,opacity;transform-origin:bottom center;">${letter}</span>`;
-      }).join('');
+      if (row.classList.contains('text-glitch')) {
+        row.innerHTML = `<span class="letter" style="display:inline-block;opacity:0;transform:translateY(80px) rotateX(-40deg);will-change:transform,opacity;transform-origin:bottom center;">${text}</span>`;
+      } else {
+        row.innerHTML = text.split('').map(letter => {
+          if (letter === ' ') return '&nbsp;';
+          return `<span class="letter" style="display:inline-block;opacity:0;transform:translateY(80px) rotateX(-40deg);will-change:transform,opacity;transform-origin:bottom center;">${letter}</span>`;
+        }).join('');
+      }
     });
 
     const tl = anime.timeline({
@@ -370,28 +333,10 @@
 
       card.addEventListener('mouseenter', () => {
         if (dot) dot.classList.add('active');
-        if (typeof anime !== 'undefined') {
-          anime({
-            targets: card,
-            translateY: -10,
-            scale: 1.02,
-            duration: 400,
-            easing: 'cubicBezier(0.34, 1.56, 0.64, 1)'
-          });
-        }
       });
 
       card.addEventListener('mouseleave', () => {
         if (dot && !isOriginallyActive) dot.classList.remove('active');
-        if (typeof anime !== 'undefined') {
-          anime({
-            targets: card,
-            translateY: 0,
-            scale: 1,
-            duration: 400,
-            easing: 'cubicBezier(0.16, 1, 0.3, 1)'
-          });
-        }
       });
     });
   }
@@ -475,31 +420,7 @@
      11. TESTIMONIALS — Hover lift
      ═══════════════════════════════════════════════════════ */
   function initTestimonialHovers() {
-    const items = $$('.testimonial-item');
-    items.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        if (typeof anime !== 'undefined') {
-          anime({
-            targets: item,
-            translateY: -8,
-            scale: 1.015,
-            duration: 400,
-            easing: 'cubicBezier(0.34, 1.56, 0.64, 1)'
-          });
-        }
-      });
-      item.addEventListener('mouseleave', () => {
-        if (typeof anime !== 'undefined') {
-          anime({
-            targets: item,
-            translateY: 0,
-            scale: 1,
-            duration: 400,
-            easing: 'cubicBezier(0.16, 1, 0.3, 1)'
-          });
-        }
-      });
-    });
+    // Handled entirely by high-performance GPU CSS transition selectors to avoid dual animation jank.
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -757,10 +678,13 @@
   /* ═══════════════════════════════════════════════════════
      21. PROJECTS 3D SPIRAL HELIX — Kinetic Floating Showcase
      ═══════════════════════════════════════════════════════ */
-  function initProjectsSpiralHelix() {
-    const spiralSection = $('#projects');
-    const track = $('#spiral-track');
-    if (!spiralSection || !track) return;
+  /* ═══════════════════════════════════════════════════════
+     21. PROJECTS HORIZONTAL KINETIC SCROLL — Side-by-side Showcase
+     ═══════════════════════════════════════════════════════ */
+  function initProjectsHorizontalScroll() {
+    const projectsSection = $('#projects');
+    const track = $('#horizontal-track');
+    if (!projectsSection || !track) return;
 
     // Define projects with their premium assets
     const projects = [
@@ -784,108 +708,60 @@
     }
     const shuffledProjects = shuffleArray([...projects]);
 
-    // Build card elements dynamically as a high-fidelity visual archive
-    track.innerHTML = shuffledProjects.map((project, index) => `
-      <div class="project-spiral-card" data-index="${index}">
-        <img src="${project.img}" alt="${project.title}" class="card-img">
-        <div class="card-reticle"></div>
-        <div class="card-overlay">
-          <div class="card-overlay-header">
-            <span class="card-file-id">OPUS.FILE_0${index + 1}</span>
-            <span class="card-file-tag">// SYSTEM ARCHIVE</span>
-          </div>
-          <div class="card-overlay-divider"></div>
-          <div class="card-overlay-body">
-            <span class="card-category">${project.category}</span>
-            <h3 class="card-title">${project.title}</h3>
+    // Static array of premium organic tilts to distribute among cards
+    const tilts = [-3, 2, -1.5, 3, -2, 1, -2.5, 2];
+
+    // Build card elements dynamically side-by-side with individual custom tilts
+    track.innerHTML = shuffledProjects.map((project, index) => {
+      const tilt = tilts[index % tilts.length];
+      return `
+        <div class="project-horizontal-card" data-index="${index}" style="--card-tilt: ${tilt}deg; transform: rotate(${tilt}deg);">
+          <img src="${project.img}" alt="${project.title}" class="card-img">
+          <div class="card-overlay">
+            <div class="card-overlay-body">
+              <span class="card-category">${project.category}</span>
+              <h3 class="card-title">${project.title}</h3>
+            </div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
-    const cards = $$('.project-spiral-card');
-    const totalCards = cards.length;
-
-    // Scroll updates with LERP-smoothed momentum
+    // Scroll calculations with LERP momentum
     let targetProgress = 0;
     let currentProgress = 0;
     let rafId = null;
 
-    function renderSpiral(progress) {
-      const isMobile = window.innerWidth <= 768;
-      const baseRadius = isMobile ? 80 : 160;
-      const maxRadiusGrow = isMobile ? 140 : 320;
-      const maxZTranslation = isMobile ? 1200 : 2000;
-      const baseZOffset = isMobile ? -900 : -1400;
+    function renderScroll(progress) {
+      // Calculate scroll limits based on scrollWidth and window.innerWidth
+      const maxTranslate = Math.max(0, track.scrollWidth - window.innerWidth);
+      const translateVal = -progress * maxTranslate;
 
-      cards.forEach((card, index) => {
-        const offset = index / totalCards;
-        
-        // Stagger cards along the spiral progress
-        const cardProgress = progress * 1.8 - offset * 0.95;
-        
-        // Spiral equations: winding 2.8 circles
-        const angle = cardProgress * Math.PI * 2.8 + offset * Math.PI * 2;
-        
-        // Conical spiral: expands outward (from small tight vortex in back to wide flaring horn in front)
-        const radius = Math.max(isMobile ? 40 : 80, baseRadius + cardProgress * maxRadiusGrow); 
-        
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius - (isMobile ? 20 : 40); // Center vertical offset
-        
-        // Depth scale: from deep background right past viewer's eyes
-        const z = baseZOffset + cardProgress * maxZTranslation;
-        
-        // 3D rotations for tumbling organic motion
-        const rotZ = angle * (180 / Math.PI) * 0.06; // Subtle roll
-        const rotY = Math.cos(angle) * 16; // 3D tilt Y
-        const rotX = Math.sin(angle) * 12; // 3D tilt X
-        
-        // Opacity mapping for smooth entry/exit
-        let opacity = 0;
-        if (cardProgress > -0.15 && cardProgress < 1.15) {
-          if (cardProgress < 0.2) {
-            opacity = Math.max(0, (cardProgress + 0.15) / 0.35);
-          } else if (cardProgress > 0.85) {
-            opacity = Math.max(0, 1 - (cardProgress - 0.85) / 0.3);
-          } else {
-            opacity = 1;
-          }
-        }
-        opacity = Math.max(0, Math.min(1, opacity));
-
-        // Apply transformations
-        card.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
-        card.style.opacity = opacity;
-        
-        // Only trigger pointer events when fully visible
-        card.style.pointerEvents = (opacity > 0.25 && z < 200) ? 'auto' : 'none';
-        
-        // Dynamic z-index
-        card.style.zIndex = Math.round(z + 2000);
-      });
+      // Translate the entire track horizontally
+      track.style.transform = `translate3d(${translateVal}px, 0, 0)`;
     }
 
     function renderLoop() {
       const diff = targetProgress - currentProgress;
-      if (Math.abs(diff) < 0.0005) {
+      if (Math.abs(diff) < 0.0001) {
         currentProgress = targetProgress;
-        renderSpiral(currentProgress);
+        renderScroll(currentProgress);
         rafId = null;
         return;
       }
 
-      // 0.08 for smooth organic fluid momentum
+      // Smooth LERP easing (0.08) for premium fluid feel
       currentProgress += diff * 0.08;
-      renderSpiral(currentProgress);
+      renderScroll(currentProgress);
       rafId = requestAnimationFrame(renderLoop);
     }
 
-    function updateSpiralTarget() {
-      const rect = spiralSection.getBoundingClientRect();
+    function updateScrollTarget() {
+      const rect = projectsSection.getBoundingClientRect();
       const sectionHeight = rect.height;
       const viewHeight = window.innerHeight;
 
+      // Calculate how far we've scrolled inside the sticky container
       const scrolledPast = -rect.top;
       const scrollableDist = sectionHeight - viewHeight;
       targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
@@ -895,52 +771,23 @@
       }
     }
 
-    window.addEventListener('scroll', updateSpiralTarget, { passive: true });
-    
+    window.addEventListener('scroll', updateScrollTarget, { passive: true });
     window.addEventListener('resize', () => {
-      // Force instant update on resize to prevent visual lag
-      const rect = spiralSection.getBoundingClientRect();
-      const sectionHeight = rect.height;
-      const viewHeight = window.innerHeight;
-      const scrolledPast = -rect.top;
-      const scrollableDist = sectionHeight - viewHeight;
-      targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+      // Trigger instant recalculation on resize
+      updateScrollTarget();
       currentProgress = targetProgress;
-      renderSpiral(currentProgress);
+      renderScroll(currentProgress);
     }, { passive: true });
-    
-    // Initial call to render
-    const rect = spiralSection.getBoundingClientRect();
-    const sectionHeight = rect.height;
-    const viewHeight = window.innerHeight;
-    const scrolledPast = -rect.top;
-    const scrollableDist = sectionHeight - viewHeight;
-    targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+
+    // Initial positioning
+    updateScrollTarget();
     currentProgress = targetProgress;
-    renderSpiral(currentProgress);
+    renderScroll(currentProgress);
   }
 
   /* ═══════════════════════════════════════════════════════
-     22. OS HUD REAL-TIME CLOCK
+     22. OS HUD REAL-TIME CLOCK - Removed
      ═══════════════════════════════════════════════════════ */
-  function initHUDClock() {
-    const clockEl = $('#hud-time');
-    if (!clockEl) return;
-
-    function updateClock() {
-      const now = new Date();
-      const options = {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      };
-      clockEl.textContent = new Intl.DateTimeFormat('en-US', options).format(now);
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-  }
 
   /* ═══════════════════════════════════════════════════════
      23. DYNAMIC KEYBOARD DIAGNOSTICS TERMINAL EASTER EGG
@@ -1012,7 +859,6 @@
      INIT
      ═══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', () => {
-    initCustomCursor();
     animateHero();
     initParallax();
     initScrollReveal();
@@ -1031,8 +877,7 @@
     initBioScrollReveal();
     initBioCard3DScroll();
     initScrollDrawingManifesto();
-    initProjectsSpiralHelix();
-    initHUDClock();
+    initProjectsHorizontalScroll();
     initDiagnosticsTerminal();
   });
 })();

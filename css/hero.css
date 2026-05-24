@@ -94,7 +94,7 @@
   text-decoration: none;
   padding: 14px 28px;
   border: 1px solid var(--border-default);
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   background: transparent;
   transition: background var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out),
@@ -138,16 +138,16 @@
 .prismatic-portal {
   width: 320px;
   height: 430px;
-  border-radius: 24px;
-  background: rgba(18, 18, 19, 0.45); /* Translucent obsidian glass */
+  border-radius: var(--r-md);
+  background: rgba(19, 16, 30, 0.45); /* Translucent Surface Dark */
   position: relative;
   overflow: visible; /* Let backlights and orbits bleed out poetically */
   transform-style: preserve-3d;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-default);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7),
-              0 0 40px rgba(235, 77, 109, 0.1);
+              0 0 40px rgba(232, 160, 52, 0.08);
   will-change: transform;
   display: flex;
   justify-content: center;
@@ -159,7 +159,7 @@
   position: absolute;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(235, 77, 109, 0.35) 0%, rgba(212, 175, 55, 0.15) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 160, 52, 0.25) 0%, rgba(212, 67, 26, 0.1) 50%, transparent 70%);
   border-radius: 50%;
   filter: blur(50px);
   z-index: 1;
@@ -179,7 +179,7 @@
 .portal-ring.ring-1 {
   width: 240px;
   height: 240px;
-  border-color: rgba(235, 77, 109, 0.35);
+  border-color: rgba(232, 160, 52, 0.25);
   animation: spinClockwise 18s linear infinite;
   transform: rotateX(45deg) rotateY(15deg);
 }
@@ -187,7 +187,7 @@
 .portal-ring.ring-2 {
   width: 180px;
   height: 180px;
-  border-color: rgba(212, 175, 55, 0.35);
+  border-color: rgba(212, 67, 26, 0.25);
   border-style: dotted;
   border-width: 2px;
   animation: spinCounterClockwise 12s linear infinite;
@@ -197,7 +197,7 @@
 .portal-ring.ring-3 {
   width: 120px;
   height: 120px;
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(245, 240, 232, 0.15);
   animation: spinClockwise 8s linear infinite;
   transform: rotateX(60deg) rotateY(-20deg);
 }
@@ -208,11 +208,11 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #eb4d6d 50%, #7e1d31 100%);
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e8a034 50%, #d4431a 100%);
   z-index: 3;
-  box-shadow: 0 0 30px rgba(235, 77, 109, 0.6),
-              0 0 60px rgba(212, 175, 55, 0.2),
-              inset 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 30px rgba(232, 160, 52, 0.6),
+              0 0 60px rgba(212, 67, 26, 0.2),
+              inset 0 0 10px rgba(245, 240, 232, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,7 +249,7 @@
 }
 
 .spec-line:first-child {
-  color: var(--accent); /* Framer Cherry Red status code */
+  color: var(--accent); /* Amber status code */
 }
 
 /* Keyframe Animations */
@@ -280,8 +280,8 @@
 
 /* Glitch Typography Easing & Dramatic Vignette Background */
 .hero {
-  background: radial-gradient(circle at 80% 30%, rgba(235, 77, 109, 0.04) 0%, transparent 65%),
-              radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 60%),
+  background: radial-gradient(circle at 80% 30%, rgba(232, 160, 52, 0.05) 0%, transparent 65%),
+              radial-gradient(circle at 20% 80%, rgba(212, 67, 26, 0.03) 0%, transparent 60%),
               var(--bg-primary);
 }
 

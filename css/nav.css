@@ -129,11 +129,11 @@
   font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 600;
-  color: #060606;
-  background: #ffffff;
+  color: #0d0b14; /* Void Black text */
+  background: var(--text-primary); /* Warm Cream */
   padding: 10px 24px;
-  border-radius: var(--r-full);
-  border: 1px solid #ffffff;
+  border-radius: var(--r-md); /* Sharp geometry */
+  border: 1px solid var(--text-primary);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out),
@@ -145,13 +145,13 @@
   align-items: center;
   gap: 8px;
 }
-
+ 
 .nav-cta:hover {
-  background: var(--accent);
+  background: var(--accent); /* Amber */
   border-color: var(--accent);
-  color: #ffffff;
+  color: #0d0b14;
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(235, 77, 109, 0.35);
+  box-shadow: 0 4px 15px rgba(232, 160, 52, 0.35);
 }
 
 /* ── Mobile Menu Toggle ── */
@@ -197,7 +197,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    background: rgba(6, 6, 6, 0.98); /* Matching the cinematic dark canvas */
+    background: rgba(13, 11, 20, 0.98); /* Matching the Void Black canvas */
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     opacity: 0;

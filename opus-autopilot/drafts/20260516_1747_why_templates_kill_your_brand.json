@@ -1,0 +1,43 @@
+{
+  "title": "Why Templates Kill Your Brand",
+  "slides": [
+    {
+      "slide_number": 1,
+      "type": "cover",
+      "text": "Is your brand a template, or a masterpiece?",
+      "visual_direction": "Dark near-black background, subtle amber light streak from bottom-left, minimal composition"
+    },
+    {
+      "slide_number": 2,
+      "type": "content",
+      "text": "Templates homogenize your brand, making it forgettable.",
+      "visual_direction": "Dark background with faint amber circle outline top-right, clean negative space"
+    },
+    {
+      "slide_number": 3,
+      "type": "content",
+      "text": "Originality is key to standing out in a crowded market.",
+      "visual_direction": "Near-black background with subtle amber dot grid pattern, minimal geometric, premium brand aesthetic"
+    },
+    {
+      "slide_number": 4,
+      "type": "content",
+      "text": "When you customize, you show your audience you care.",
+      "visual_direction": "Dark background with warm amber center glow, cinematic editorial, no text in background"
+    },
+    {
+      "slide_number": 5,
+      "type": "content",
+      "text": "Don't settle for generic. Make a statement with your brand.",
+      "visual_direction": "Dark near-black background, subtle amber accent line, one focal point"
+    },
+    {
+      "slide_number": 6,
+      "type": "call_to_action",
+      "text": "Ready to elevate your brand? Let's chat.",
+      "visual_direction": "Dark background with faint amber arrow pointing to the right, minimal composition"
+    }
+  ],
+  "caption": "Break free from template hell. Let's create a brand that truly reflects your unique story. DM us to get started!",
+  "hashtags": "#branding #templates #smallbusiness #creatives"
+}

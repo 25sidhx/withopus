@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPUS | Digital Atelier — New Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500&display=swap">
+
+<style>
+  :root {
+    --void:     #0D0B14;
+    --void-2:   #13101E;
+    --void-3:   rgba(255,255,255,0.07);
+    --cream:    #F5F0E8;
+    --muted:    rgba(245,240,232,0.55);
+    --amber:    #E8A034;
+    --crimson:  #7A1530;
+    --violet:   #3D1155;
+    --grad:     linear-gradient(135deg, #E8A034 0%, #7A1530 50%, #3D1155 100%);
+    --safe:     80px;
+    --font-h:   'Satoshi', sans-serif;
+    --font-b:   'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: var(--font-b);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.06;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 40px;
+    background: rgba(13,11,20,0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--void-3);
+    border-radius: 100px;
+    padding: 14px 32px;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .nav-brand {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta {
+    background: var(--grad);
+    color: var(--void);
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 0 var(--safe);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(61,17,85,0.35) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 30% 80%, rgba(122,21,48,0.2) 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; padding-top: 120px; }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 32px;
+  }
+  .hero-headline {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .hero-headline em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 48px;
+    line-height: 1.75;
+  }
+  .hero-ctas { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    background: var(--grad);
+    color: var(--void);
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--void-3);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--cream); border-color: var(--amber); }
+
+  /* Hero visual panel */
+  .hero-visual {
+    position: relative; z-index: 1;
+    padding-top: 120px;
+    height: 100vh;
+    display: flex; align-items: center;
+  }
+  .hero-image-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-image-frame .img-bg {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #1a1228 0%, #3D1155 40%, #7A1530 70%, #E8A034 100%);
+    position: relative;
+  }
+  .hero-image-frame .img-grain {
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+  .hero-image-frame .img-label {
+    position: absolute; bottom: 24px; left: 24px;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    border-top: 1px solid var(--void-3);
+    border-bottom: 1px solid var(--void-3);
+    padding: 18px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex; gap: 64px;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .marquee-item span { color: var(--amber); margin: 0 16px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 120px var(--safe); }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 24px;
+  }
+  .section-headline {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 64px;
+  }
+
+  /* ── WORK GRID ── */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2px;
+  }
+  .work-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .work-card:first-child { grid-row: span 2; }
+  .work-card-inner {
+    width: 100%; height: 100%; min-height: 360px;
+    position: relative;
+    transition: transform 0.7s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .work-card:hover .work-card-inner { transform: scale(1.03); }
+  .work-card-bg {
+    position: absolute; inset: 0;
+  }
+  .card-nocturne  { background: linear-gradient(160deg, #0a0814 0%, #1e0d35 50%, #3D1155 100%); }
+  .card-liminal   { background: linear-gradient(160deg, #140a0d 0%, #7A1530 100%); }
+  .card-vessel    { background: linear-gradient(160deg, #0d100a 0%, #1a2e1a 60%, #2d4a2d 100%); }
+  .work-card-grain {
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+  .work-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,11,20,0.85) 0%, transparent 55%);
+  }
+  .work-card-meta {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 32px;
+  }
+  .work-card-cat {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .work-card-title {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+  }
+  .work-card:first-child .work-card-title { font-size: 2.4rem; }
+  .work-card-arrow {
+    position: absolute; top: 32px; right: 32px;
+    width: 40px; height: 40px;
+    border: 1px solid var(--void-3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    font-size: 1rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .work-card:hover .work-card-arrow { opacity: 1; transform: translateY(0); }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy { background: var(--void-2); }
+  .phil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .phil-left .section-headline { margin-bottom: 0; }
+  .phil-items { display: flex; flex-direction: column; gap: 48px; }
+  .phil-item { border-top: 1px solid var(--void-3); padding-top: 28px; }
+  .phil-num {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .phil-title {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  .phil-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.75; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    padding: 140px var(--safe);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(61,17,85,0.3) 0%, transparent 70%);
+  }
+  .cta-band .section-headline {
+    font-size: clamp(3rem, 6vw, 7rem);
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .cta-band .section-headline em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-actions { display: flex; gap: 20px; justify-content: center; position: relative; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 80px var(--safe) 48px;
+    border-top: 1px solid var(--void-3);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  .footer-brand {
+    font-family: var(--font-h);
+    font-weight: 300;
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .footer-tagline { color: var(--muted); font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
+  .footer-col-head {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+  }
+  .footer-col a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--void-3);
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.25,0.1,0.25,1), transform 0.8s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    :root { --safe: 24px; }
+    nav { padding: 12px 20px; gap: 16px; top: 16px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 80px; min-height: auto; padding-bottom: 60px; }
+    .hero-visual { height: 60vw; padding-top: 0; }
+    .hero-image-frame { aspect-ratio: 4/3; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card:first-child { grid-row: span 1; }
+    .phil-grid { grid-template-columns: 1fr; gap: 48px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .cta-band .section-headline { font-size: clamp(2.5rem, 10vw, 4rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">OPUS</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#studio">Studio</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Inquire</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow reveal">Digital Atelier · Cinematic Design · Nagpur, India</p>
+    <h1 class="hero-headline reveal reveal-d1">
+      We build<br>
+      digital <em>masterworks.</em>
+    </h1>
+    <p class="hero-sub reveal reveal-d2">
+      A cinematic approach to digital product design, motion, and brand identity.
+      We craft experiences that resonate with quiet confidence.
+    </p>
+    <div class="hero-ctas reveal reveal-d3">
+      <a href="#contact" class="btn-primary">Start a Project</a>
+      <a href="#work" class="btn-ghost">View the Gallery →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual reveal reveal-d1">
+    <div class="hero-image-frame">
+      <div class="img-bg">
+        <div class="img-grain"></div>
+        <div class="img-label">Opus Digital Atelier · 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Brand Identity<span>✦</span></div>
+    <div class="marquee-item">Cinematic Design<span>✦</span></div>
+    <div class="marquee-item">Motion Systems<span>✦</span></div>
+    <div class="marquee-item">Digital Atelier<span>✦</span></div>
+    <div class="marquee-item">Visual Direction<span>✦</span></div>
+    <div class="marquee-item">Web Experience<span>✦</span></div>
+    <div class="marquee-item">Brand Identity<span>✦</span></div>
+    <div class="marquee-item">Cinematic Design<span>✦</span></div>
+    <div class="marquee-item">Motion Systems<span>✦</span></div>
+    <div class="marquee-item">Digital Atelier<span>✦</span></div>
+    <div class="marquee-item">Visual Direction<span>✦</span></div>
+    <div class="marquee-item">Web Experience<span>✦</span></div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <p class="eyebrow reveal">Selected Works</p>
+  <h2 class="section-headline reveal reveal-d1">The work<br>speaks first.</h2>
+
+  <div class="work-grid">
+    <!-- Nocturne — featured -->
+    <div class="work-card reveal">
+      <div class="work-card-inner">
+        <div class="work-card-bg card-nocturne"></div>
+        <div class="work-card-grain"></div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-arrow">↗</div>
+        <div class="work-card-meta">
+          <div class="work-card-cat">Digital Campaign</div>
+          <div class="work-card-title">Nocturne</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liminal -->
+    <div class="work-card reveal reveal-d1">
+      <div class="work-card-inner">
+        <div class="work-card-bg card-liminal"></div>
+        <div class="work-card-grain"></div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-arrow">↗</div>
+        <div class="work-card-meta">
+          <div class="work-card-cat">Motion System</div>
+          <div class="work-card-title">Liminal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vessel -->
+    <div class="work-card reveal reveal-d2">
+      <div class="work-card-inner">
+        <div class="work-card-bg card-vessel"></div>
+        <div class="work-card-grain"></div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-arrow">↗</div>
+        <div class="work-card-meta">
+          <div class="work-card-cat">Web Experience</div>
+          <div class="work-card-title">Vessel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="studio">
+  <div class="phil-grid">
+    <div class="phil-left">
+      <p class="eyebrow reveal">Our Philosophy</p>
+      <h2 class="section-headline reveal reveal-d1">
+        Craft over<br>commodity.
+      </h2>
+    </div>
+    <div class="phil-items">
+      <div class="phil-item reveal">
+        <div class="phil-num">01</div>
+        <div class="phil-title">Built from the ground up.</div>
+        <div class="phil-desc">We start fresh every time. The final result is unmistakably yours — never adapted from a template.</div>
+      </div>
+      <div class="phil-item reveal reveal-d1">
+        <div class="phil-num">02</div>
+        <div class="phil-title">Partnerships built on trust.</div>
+        <div class="phil-desc">Month-to-month. No lock-in. We deliver results that make you want to stay.</div>
+      </div>
+      <div class="phil-item reveal reveal-d2">
+        <div class="phil-num">03</div>
+        <div class="phil-title">A commitment to craft.</div>
+        <div class="phil-desc">A project is only complete when it meets the standard we've set together. Not before.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <h2 class="section-headline reveal">
+    Ready to make<br>something <em>extraordinary?</em>
+  </h2>
+  <div class="cta-actions reveal reveal-d1">
+    <a href="mailto:hello@withopus.in" class="btn-primary">Start a Project</a>
+    <a href="#work" class="btn-ghost">See Our Work →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">opus</div>
+      <p class="footer-tagline">A cinematic atelier crafting digital experiences with quiet confidence. Based in Nagpur, India.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Navigate</div>
+      <a href="#work">Work</a>
+      <a href="#studio">Studio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Connect</div>
+      <a href="https://instagram.com/with_opus" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:hello@withopus.in">Email</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Legal</div>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Opus Digital Atelier · Nagpur, India</span>
+    <span>Made with intention</span>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(13,11,20,0.92)' : 'rgba(13,11,20,0.75)';
+  }, { passive: true });
+</script>
+</body>
+</html>

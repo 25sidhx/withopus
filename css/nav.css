@@ -36,6 +36,7 @@
   max-width: 1800px;
   margin: 0 auto;
   height: 48px;
+  position: relative;
 }
 
 /* ── Logo ── */
@@ -57,6 +58,10 @@
 
 /* ── Nav Links ── */
 .nav-links {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -144,6 +149,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    transform: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -175,4 +181,10 @@
   .nav-toggle { display: flex; z-index: 101; }
 
   .nav-cta-desktop { display: none; }
+}
+
+@media (min-width: 769px) {
+  .nav-links li:last-child {
+    display: none;
+  }
 }

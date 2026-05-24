@@ -1,0 +1,325 @@
+/* ──────────────────────────────────────────────────────────
+   ENHANCEMENTS — Custom cursor, scroll progress, glow trails,
+   enhanced hover effects, stagger opacity helpers.
+   ───────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+   ══════════════════════════════════════════════════════════ */
+.custom-cursor {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background 0.25s ease;
+  mix-blend-mode: difference;
+  will-change: left, top;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  will-change: left, top;
+}
+
+.custom-cursor.cursor-hover {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.custom-cursor-dot.cursor-hover {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+}
+
+/* Hide default cursor globally */
+body:has(.custom-cursor) {
+  cursor: none;
+}
+body:has(.custom-cursor) a,
+body:has(.custom-cursor) button,
+body:has(.custom-cursor) [role="button"] {
+  cursor: none;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ══════════════════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--text-primary);
+  z-index: 9998;
+  transition: width 0.05s linear;
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAV DARK MODE OVERRIDE — When over dark sections
+   ══════════════════════════════════════════════════════════ */
+.navbar.nav-dark-mode.scrolled {
+  background: rgba(10, 10, 10, 0.88);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.navbar.nav-dark-mode .nav-logo-text {
+  color: #f3f3f1;
+}
+
+.navbar.nav-dark-mode .nav-link {
+  color: rgba(243, 243, 241, 0.65);
+}
+
+.navbar.nav-dark-mode .nav-link:hover,
+.navbar.nav-dark-mode .nav-link.active {
+  color: #f3f3f1;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar.nav-dark-mode:not(.scrolled) .nav-cta-desktop,
+.navbar.scrolled.nav-dark-mode .nav-cta-desktop {
+  background: #f3f3f1;
+  color: #0a0a0a;
+}
+
+.navbar.nav-dark-mode:not(.scrolled) .nav-cta-desktop:hover,
+.navbar.scrolled.nav-dark-mode .nav-cta-desktop:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.navbar.nav-dark-mode .nav-toggle span {
+  background: #f3f3f1;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SECTION LABEL ANIMATION
+   ══════════════════════════════════════════════════════════ */
+.section-label {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-label.label-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED SERVICE ACCORDION — Electric blue glow on hover
+   ══════════════════════════════════════════════════════════ */
+.service-accordion-item {
+  position: relative;
+}
+
+.service-accordion-item::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 0;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.service-accordion-item:hover {
+  background-color: rgba(0, 0, 0, 0.015);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04),
+              0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+.service-accordion-item.active {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED PROJECT CARDS — Glow overlay + tilt
+   ══════════════════════════════════════════════════════════ */
+.project-item {
+  transition: transform 0.15s ease-out,
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  will-change: transform;
+}
+
+.project-item:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+}
+
+.project-overlay {
+  z-index: 2;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED PROCESS CARDS — Glow border on hover
+   ══════════════════════════════════════════════════════════ */
+.process-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  background: #121212;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED PRICING — Spotlight gradient on hover
+   ══════════════════════════════════════════════════════════ */
+.pricing-tier {
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-tier:hover {
+  border-color: var(--border-default);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.03);
+}
+
+.pricing-tier.featured:hover {
+  border-color: var(--accent);
+  box-shadow: 0 20px 48px rgba(0, 72, 249, 0.04),
+              0 12px 24px rgba(0, 0, 0, 0.02);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED TESTIMONIALS — Subtle glow lift
+   ══════════════════════════════════════════════════════════ */
+.testimonial-item:hover {
+  border-color: var(--border-default);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.03);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENHANCED FAQ — Active glow
+   ══════════════════════════════════════════════════════════ */
+.faq-item.open {
+  border-color: var(--border-default);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
+}
+
+/* ══════════════════════════════════════════════════════════
+   STAGGER OPACITY HELPERS — Children start hidden
+   ══════════════════════════════════════════════════════════ */
+.reveal .stat-item,
+.reveal .process-card,
+.reveal .testimonial-item,
+.reveal .project-item,
+.reveal .pricing-tier,
+.reveal .faq-item,
+.reveal .service-accordion-item {
+  opacity: 0;
+}
+
+.reveal.visible .stat-item,
+.reveal.visible .process-card,
+.reveal.visible .testimonial-item,
+.reveal.visible .project-item,
+.reveal.visible .pricing-tier,
+.reveal.visible .faq-item,
+.reveal.visible .service-accordion-item {
+  /* CSS-only fallback if anime.js fails to load or fire */
+  opacity: 1;
+  transition: opacity 0.6s ease 0.1s;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CTA BANNER — Gradient glow pulse
+   ══════════════════════════════════════════════════════════ */
+.cta-banner-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--accent), #00d4ff, var(--accent));
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+  animation: ctaGlow 3s ease-in-out infinite;
+}
+
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.02); }
+}
+
+.cta-banner-btn:hover::before {
+  opacity: 0.8;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HERO WAVY CARD — Float removed; parallax via JS handles
+   the transform. CSS animation + JS inline transform both
+   write to the same property, causing the animation to be
+   overridden on every scroll frame.
+   ══════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════
+   FORM INPUTS — Focus glow
+   ══════════════════════════════════════════════════════════ */
+.form-input:focus {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER SOCIAL — Glow pulse on hover
+   ══════════════════════════════════════════════════════════ */
+.footer-social-link:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+/* ══════════════════════════════════════════════════════════
+   REDUCED MOTION — Disable all enhancements
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .custom-cursor-dot,
+  .scroll-progress {
+    display: none !important;
+  }
+  .reveal.visible .stat-item,
+  .reveal.visible .process-card,
+  .reveal.visible .testimonial-item,
+  .reveal.visible .project-item,
+  .reveal.visible .pricing-tier,
+  .reveal.visible .faq-item,
+  .reveal.visible .service-accordion-item {
+    transition: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   TOUCH DEVICES — Disable cursor
+   ══════════════════════════════════════════════════════════ */
+@media (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+}

@@ -1,0 +1,43 @@
+# Opus — withopus.in
+# Allow all crawlers for maximum visibility
+
+User-agent: *
+Allow: /
+Disallow: /test_proxy.py
+Disallow: /b64.txt
+Disallow: /pdf_text.txt
+Disallow: /personal_context.md
+Disallow: /*.pem
+Disallow: /claude code/
+Disallow: /antigravity-kit-main/
+Disallow: /antigravity-skills/
+Disallow: /antigravity-skills-main/
+Disallow: /agency-agents-/
+Disallow: /spikes/
+Disallow: /leads/
+Disallow: /*.json
+Disallow: /*.py
+Disallow: /*.md
+Disallow: /*.txt
+Disallow: /*.csv
+
+# Allow CSS/JS for rendering
+Allow: /css/
+Allow: /js/
+Allow: /favicon.svg
+
+# AI Crawlers — Allow for GEO (Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://withopus.in/sitemap.xml

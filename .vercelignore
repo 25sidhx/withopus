@@ -1,0 +1,63 @@
+# Vercel Ignore File — With Opus Secure Deploy
+
+# Exclude sensitive keys & credentials
+*.pem
+*.key
+*.token
+creds/
+credentials/
+secrets/
+
+# Exclude Python scripts & backups
+*.py
+*.pyc
+__pycache__/
+telegram_bot_backup.py
+get_telegram_id.py
+ig_test.py
+test_proxy.py
+
+# Exclude development, scrape, & text datasets
+*.json
+*.pdf
+*.csv
+*.txt
+b64.txt
+pdf_text.txt
+NammaYediCafe_Final pro.pdf
+withopus.in (DNS Records).csv
+dataset_crawler-google-places_*.json
+dataset_swiggy-scraper_*.json
+
+# Exclude Agent and System configurations
+.agent/
+.claude/
+.planning/
+.netlify/
+.git/
+.github/
+.vscode/
+
+# Exclude scratch or temporary resources
+spikes/
+test_post/
+agency-agents-/
+antigravity-kit-main/
+antigravity-skills/
+antigravity-skills-main/
+opus-autopilot/
+temp_orb.css
+brand.md
+opus-brand.md
+content-calendar.md
+personal_context.md
+
+# Maintain standard web assets
+!index.html
+!favicon.svg
+!robots.txt
+!sitemap.xml
+!css/
+!js/
+!blog/
+!leads/

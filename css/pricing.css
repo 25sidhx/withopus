@@ -23,6 +23,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: start;
+  padding-top: 16px;
 }
 
 .pricing-tier {
@@ -47,6 +48,7 @@
   border-color: var(--accent);
   box-shadow: 0 0 60px var(--accent-glow-20);
   position: relative;
+  overflow: visible;
 }
 
 .pricing-badge {

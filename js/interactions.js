@@ -755,6 +755,118 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     21. PROJECTS 3D SPIRAL HELIX — Kinetic Floating Showcase
+     ═══════════════════════════════════════════════════════ */
+  function initProjectsSpiralHelix() {
+    const spiralSection = $('#projects');
+    const track = $('#spiral-track');
+    if (!spiralSection || !track) return;
+
+    // Define projects with their premium assets
+    const projects = [
+      { img: 'portfolio_kolm.jpg', category: 'Industrial Design & Packaging', title: 'KOLM Coffee / Specialty Canister' },
+      { img: 'portfolio_lunare.jpg', category: 'Haute Couture & E-Commerce', title: 'LUNARE Maison / Fashion House' },
+      { img: 'portfolio_kiro.jpg', category: 'Creative Direction & Apparel', title: 'KIRO / Brand Identity Packaging' },
+      { img: 'portfolio_veda.jpg', category: 'Spatial Design & Architecture', title: 'Veda Restaurant / Atmosphere' },
+      { img: 'portfolio_chai.jpg', category: 'Identity & Tactile Cardstock', title: 'Chai Thadi / Streetways Brew' },
+      { img: 'portfolio_dakshin.jpg', category: 'Branding & Eco Takeaway', title: 'Dakshin Canteen / Takeaway Packaging' },
+      { img: 'portfolio_sinua.jpg', category: 'Luxury Cosmetics & Foil Stamping', title: 'Sinua / Foil-Stamped Cardstock' },
+      { img: 'portfolio_crumb.jpg', category: 'Visual Identity & Luxury Packaging', title: 'Crumb Club / Artisan Patisserie' }
+    ];
+
+    // Shuffle the photos randomly on load to keep it dynamic and fresh!
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    const shuffledProjects = shuffleArray([...projects]);
+
+    // Build card elements dynamically
+    track.innerHTML = shuffledProjects.map((project, index) => `
+      <div class="project-spiral-card" data-index="${index}">
+        <img src="${project.img}" alt="${project.title}" class="card-img">
+        <div class="card-overlay">
+          <span class="card-category">${project.category}</span>
+          <h3 class="card-title">${project.title}</h3>
+        </div>
+      </div>
+    `).join('');
+
+    const cards = $$('.project-spiral-card');
+    const totalCards = cards.length;
+
+    // Scroll updates
+    function updateSpiral() {
+      const rect = spiralSection.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewHeight = window.innerHeight;
+
+      // scrollProgress goes from 0 (section enters viewport top) to 1 (section bottom leaves screen top)
+      // Rect.top goes from viewHeight to -sectionHeight
+      const scrolledPast = -rect.top;
+      const scrollableDist = sectionHeight - viewHeight;
+      const scrollProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+
+      cards.forEach((card, index) => {
+        const offset = index / totalCards;
+        
+        // Stagger cards along the spiral progress
+        // Each card has an active progress timeline
+        const cardProgress = scrollProgress * 1.7 - offset * 0.95;
+        
+        // Spiral equations
+        const angle = cardProgress * Math.PI * 2.6 + offset * Math.PI * 2;
+        
+        // Conical spiral: radius shrinks as it goes further back in space
+        const radius = Math.max(120, 380 - cardProgress * 150); 
+        
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius - 30; // Centered
+        
+        // Depth scale: from deep background (-1200px) to foreground (+400px)
+        const z = -1200 + cardProgress * 1800;
+        
+        // 3D rotations for beautiful tumbling motion
+        const rotZ = angle * (180 / Math.PI) * 0.08; // Subtle roll
+        const rotY = Math.cos(angle) * 15; // 3D tilt Y
+        const rotX = Math.sin(angle) * 12; // 3D tilt X
+        
+        // Opacity mapping for smooth entry/exit
+        let opacity = 0;
+        if (cardProgress > -0.15 && cardProgress < 1.15) {
+          if (cardProgress < 0.1) {
+            // Fade in as it comes from background
+            opacity = Math.max(0, (cardProgress + 0.15) / 0.25);
+          } else if (cardProgress > 0.95) {
+            // Fade out as it zooms past the camera
+            opacity = Math.max(0, 1 - (cardProgress - 0.95) / 0.2);
+          } else {
+            opacity = 1;
+          }
+        }
+
+        // Apply transformations using hardware-accelerated inline styles
+        card.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+        card.style.opacity = opacity;
+        
+        // Only trigger pointer events when fully visible to prevent accidental clicks on ghost elements
+        card.style.pointerEvents = (opacity > 0.25 && z < 200) ? 'auto' : 'none';
+        
+        // Dynamic z-index so closer cards always stack on top of deeper cards!
+        card.style.zIndex = Math.round(z + 2000);
+      });
+    }
+
+    window.addEventListener('scroll', updateSpiral, { passive: true });
+    // Also trigger on resize to ensure perfect screen bounds calculations
+    window.addEventListener('resize', updateSpiral, { passive: true });
+    updateSpiral();
+  }
+
+  /* ═══════════════════════════════════════════════════════
      INIT
      ═══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', () => {
@@ -777,5 +889,6 @@
     initBioScrollReveal();
     initBioCard3DScroll();
     initScrollDrawingManifesto();
+    initProjectsSpiralHelix();
   });
 })();

@@ -804,49 +804,50 @@
       const sectionHeight = rect.height;
       const viewHeight = window.innerHeight;
 
-      // scrollProgress goes from 0 (section enters viewport top) to 1 (section bottom leaves screen top)
-      // Rect.top goes from viewHeight to -sectionHeight
-      const scrolledPast = -rect.top;
-      const scrollableDist = sectionHeight - viewHeight;
-      const scrollProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+      // scrollProgress tracking from the first moment the section enters the screen bottom to the moment it leaves the screen top
+      const totalRange = viewHeight + sectionHeight;
+      const scrolled = viewHeight - rect.top;
+      const scrollProgress = Math.max(0, Math.min(1, scrolled / totalRange));
 
       cards.forEach((card, index) => {
         const offset = index / totalCards;
         
         // Stagger cards along the spiral progress
         // Each card has an active progress timeline
-        const cardProgress = scrollProgress * 1.7 - offset * 0.95;
+        const cardProgress = scrollProgress * 1.8 - offset * 0.95;
         
-        // Spiral equations
-        const angle = cardProgress * Math.PI * 2.6 + offset * Math.PI * 2;
+        // Spiral equations: winding 2.8 circles
+        const angle = cardProgress * Math.PI * 2.8 + offset * Math.PI * 2;
         
-        // Conical spiral: radius shrinks as it goes further back in space
-        const radius = Math.max(120, 380 - cardProgress * 150); 
+        // Conical spiral: expands outward (from small tight vortex in back to wide flaring horn in front)
+        // This clears the central title text and spreads cards beautifully across the full screen width!
+        const radius = Math.max(80, 160 + cardProgress * 320); 
         
         const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius - 30; // Centered
+        const y = Math.sin(angle) * radius - 40; // Centered
         
-        // Depth scale: from deep background (-1200px) to foreground (+400px)
-        const z = -1200 + cardProgress * 1800;
+        // Depth scale: from deep background (-1400px) right past viewer's eyes (+600px)
+        const z = -1400 + cardProgress * 2000;
         
-        // 3D rotations for beautiful tumbling motion
-        const rotZ = angle * (180 / Math.PI) * 0.08; // Subtle roll
-        const rotY = Math.cos(angle) * 15; // 3D tilt Y
+        // 3D rotations for tumbling organic motion
+        const rotZ = angle * (180 / Math.PI) * 0.06; // Subtle roll
+        const rotY = Math.cos(angle) * 16; // 3D tilt Y
         const rotX = Math.sin(angle) * 12; // 3D tilt X
         
         // Opacity mapping for smooth entry/exit
         let opacity = 0;
         if (cardProgress > -0.15 && cardProgress < 1.15) {
-          if (cardProgress < 0.1) {
-            // Fade in as it comes from background
-            opacity = Math.max(0, (cardProgress + 0.15) / 0.25);
-          } else if (cardProgress > 0.95) {
-            // Fade out as it zooms past the camera
-            opacity = Math.max(0, 1 - (cardProgress - 0.95) / 0.2);
+          if (cardProgress < 0.2) {
+            // Fade in as it emerges from background Z-depth
+            opacity = Math.max(0, (cardProgress + 0.15) / 0.35);
+          } else if (cardProgress > 0.85) {
+            // Fade out as it zooms past the camera to the sides
+            opacity = Math.max(0, 1 - (cardProgress - 0.85) / 0.3);
           } else {
             opacity = 1;
           }
         }
+        opacity = Math.max(0, Math.min(1, opacity));
 
         // Apply transformations using hardware-accelerated inline styles
         card.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;

@@ -798,36 +798,35 @@
     const cards = $$('.project-spiral-card');
     const totalCards = cards.length;
 
-    // Scroll updates
-    function updateSpiral() {
-      const rect = spiralSection.getBoundingClientRect();
-      const sectionHeight = rect.height;
-      const viewHeight = window.innerHeight;
+    // Scroll updates with LERP-smoothed momentum
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let rafId = null;
 
-      // scrollProgress tracking from the first moment the section enters the screen bottom to the moment it leaves the screen top
-      const totalRange = viewHeight + sectionHeight;
-      const scrolled = viewHeight - rect.top;
-      const scrollProgress = Math.max(0, Math.min(1, scrolled / totalRange));
+    function renderSpiral(progress) {
+      const isMobile = window.innerWidth <= 768;
+      const baseRadius = isMobile ? 80 : 160;
+      const maxRadiusGrow = isMobile ? 140 : 320;
+      const maxZTranslation = isMobile ? 1200 : 2000;
+      const baseZOffset = isMobile ? -900 : -1400;
 
       cards.forEach((card, index) => {
         const offset = index / totalCards;
         
         // Stagger cards along the spiral progress
-        // Each card has an active progress timeline
-        const cardProgress = scrollProgress * 1.8 - offset * 0.95;
+        const cardProgress = progress * 1.8 - offset * 0.95;
         
         // Spiral equations: winding 2.8 circles
         const angle = cardProgress * Math.PI * 2.8 + offset * Math.PI * 2;
         
         // Conical spiral: expands outward (from small tight vortex in back to wide flaring horn in front)
-        // This clears the central title text and spreads cards beautifully across the full screen width!
-        const radius = Math.max(80, 160 + cardProgress * 320); 
+        const radius = Math.max(isMobile ? 40 : 80, baseRadius + cardProgress * maxRadiusGrow); 
         
         const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius - 40; // Centered
+        const y = Math.sin(angle) * radius - (isMobile ? 20 : 40); // Center vertical offset
         
-        // Depth scale: from deep background (-1400px) right past viewer's eyes (+600px)
-        const z = -1400 + cardProgress * 2000;
+        // Depth scale: from deep background right past viewer's eyes
+        const z = baseZOffset + cardProgress * maxZTranslation;
         
         // 3D rotations for tumbling organic motion
         const rotZ = angle * (180 / Math.PI) * 0.06; // Subtle roll
@@ -838,10 +837,8 @@
         let opacity = 0;
         if (cardProgress > -0.15 && cardProgress < 1.15) {
           if (cardProgress < 0.2) {
-            // Fade in as it emerges from background Z-depth
             opacity = Math.max(0, (cardProgress + 0.15) / 0.35);
           } else if (cardProgress > 0.85) {
-            // Fade out as it zooms past the camera to the sides
             opacity = Math.max(0, 1 - (cardProgress - 0.85) / 0.3);
           } else {
             opacity = 1;
@@ -849,22 +846,70 @@
         }
         opacity = Math.max(0, Math.min(1, opacity));
 
-        // Apply transformations using hardware-accelerated inline styles
+        // Apply transformations
         card.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
         card.style.opacity = opacity;
         
-        // Only trigger pointer events when fully visible to prevent accidental clicks on ghost elements
+        // Only trigger pointer events when fully visible
         card.style.pointerEvents = (opacity > 0.25 && z < 200) ? 'auto' : 'none';
         
-        // Dynamic z-index so closer cards always stack on top of deeper cards!
+        // Dynamic z-index
         card.style.zIndex = Math.round(z + 2000);
       });
     }
 
-    window.addEventListener('scroll', updateSpiral, { passive: true });
-    // Also trigger on resize to ensure perfect screen bounds calculations
-    window.addEventListener('resize', updateSpiral, { passive: true });
-    updateSpiral();
+    function renderLoop() {
+      const diff = targetProgress - currentProgress;
+      if (Math.abs(diff) < 0.0005) {
+        currentProgress = targetProgress;
+        renderSpiral(currentProgress);
+        rafId = null;
+        return;
+      }
+
+      // 0.08 for smooth organic fluid momentum
+      currentProgress += diff * 0.08;
+      renderSpiral(currentProgress);
+      rafId = requestAnimationFrame(renderLoop);
+    }
+
+    function updateSpiralTarget() {
+      const rect = spiralSection.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewHeight = window.innerHeight;
+
+      const scrolledPast = -rect.top;
+      const scrollableDist = sectionHeight - viewHeight;
+      targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(renderLoop);
+      }
+    }
+
+    window.addEventListener('scroll', updateSpiralTarget, { passive: true });
+    
+    window.addEventListener('resize', () => {
+      // Force instant update on resize to prevent visual lag
+      const rect = spiralSection.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewHeight = window.innerHeight;
+      const scrolledPast = -rect.top;
+      const scrollableDist = sectionHeight - viewHeight;
+      targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+      currentProgress = targetProgress;
+      renderSpiral(currentProgress);
+    }, { passive: true });
+    
+    // Initial call to render
+    const rect = spiralSection.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    const viewHeight = window.innerHeight;
+    const scrolledPast = -rect.top;
+    const scrollableDist = sectionHeight - viewHeight;
+    targetProgress = Math.max(0, Math.min(1, scrolledPast / scrollableDist));
+    currentProgress = targetProgress;
+    renderSpiral(currentProgress);
   }
 
   /* ═══════════════════════════════════════════════════════

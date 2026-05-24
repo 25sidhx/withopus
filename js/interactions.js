@@ -784,13 +784,21 @@
     }
     const shuffledProjects = shuffleArray([...projects]);
 
-    // Build card elements dynamically
+    // Build card elements dynamically as a high-fidelity visual archive
     track.innerHTML = shuffledProjects.map((project, index) => `
       <div class="project-spiral-card" data-index="${index}">
         <img src="${project.img}" alt="${project.title}" class="card-img">
+        <div class="card-reticle"></div>
         <div class="card-overlay">
-          <span class="card-category">${project.category}</span>
-          <h3 class="card-title">${project.title}</h3>
+          <div class="card-overlay-header">
+            <span class="card-file-id">OPUS.FILE_0${index + 1}</span>
+            <span class="card-file-tag">// SYSTEM ARCHIVE</span>
+          </div>
+          <div class="card-overlay-divider"></div>
+          <div class="card-overlay-body">
+            <span class="card-category">${project.category}</span>
+            <h3 class="card-title">${project.title}</h3>
+          </div>
         </div>
       </div>
     `).join('');
@@ -913,6 +921,94 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     22. OS HUD REAL-TIME CLOCK
+     ═══════════════════════════════════════════════════════ */
+  function initHUDClock() {
+    const clockEl = $('#hud-time');
+    if (!clockEl) return;
+
+    function updateClock() {
+      const now = new Date();
+      const options = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      clockEl.textContent = new Intl.DateTimeFormat('en-US', options).format(now);
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     23. DYNAMIC KEYBOARD DIAGNOSTICS TERMINAL EASTER EGG
+     ═══════════════════════════════════════════════════════ */
+  function initDiagnosticsTerminal() {
+    const termOverlay = $('#terminal-overlay');
+    const closeBtn = $('#terminal-close-btn');
+    const logStream = $('#terminal-log-stream');
+    if (!termOverlay || !closeBtn || !logStream) return;
+
+    let keysPressed = [];
+    const secretCode = 'opus';
+
+    window.addEventListener('keydown', (e) => {
+      // Prevent key caching issues if user is writing in inputs
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+
+      keysPressed.push(e.key.toLowerCase());
+      keysPressed = keysPressed.slice(-secretCode.length);
+
+      if (keysPressed.join('') === secretCode) {
+        openTerminal();
+      }
+    });
+
+    closeBtn.addEventListener('click', closeTerminal);
+    termOverlay.addEventListener('click', (e) => {
+      if (e.target === termOverlay) closeTerminal();
+    });
+
+    function openTerminal() {
+      termOverlay.classList.add('open');
+      keysPressed = []; // Clear sequence cache
+      
+      // Simulate live system compilation logs!
+      logStream.innerHTML = `
+        <div class="log-line text-accent">&gt;&gt; INITIALIZING OPUS_OS CORE ARCHIVE PANEL...</div>
+        <div class="log-line">&gt;&gt; LOADING VOLUMETRIC GLASS ORBIT PARTICLES... [OK]</div>
+        <div class="log-line">&gt;&gt; LAT_LNG TARGET: Nagpur, Maharashtra (21.14N 79.08E)</div>
+        <div class="log-line">&gt;&gt; ACTIVE STACK: 8 Shuffled AI Portfolio Files Loaded</div>
+        <div class="log-line">&gt;&gt; GRAPH FACTOR: Hardware Accelerated rAF 3D Perspective</div>
+        <div class="log-line">&gt;&gt; LERP MOMENTUM: Active (Diff factor 0.08, inertia enabled)</div>
+        <div class="log-line">&gt;&gt; ACTIVE LIMIT: 3 Client Sprint Milestones Engaged</div>
+        <div class="log-line text-accent">&gt;&gt; SYSTEMS STATUS: COGNITIVE TEMPERATURE NOMINAL.</div>
+      `;
+
+      // Tick dynamic telemetry pulse lines to make it feel alive!
+      let counter = 0;
+      const interval = setInterval(() => {
+        if (!termOverlay.classList.contains('open')) {
+          clearInterval(interval);
+          return;
+        }
+        counter++;
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        line.textContent = `>> telemetry_pulse_tick_${counter} latency: ${(Math.random() * 6 + 2).toFixed(1)}ms [system_call: operative]`;
+        logStream.appendChild(line);
+        logStream.scrollTop = logStream.scrollHeight;
+      }, 1200);
+    }
+
+    function closeTerminal() {
+      termOverlay.classList.remove('open');
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════
      INIT
      ═══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', () => {
@@ -936,5 +1032,7 @@
     initBioCard3DScroll();
     initScrollDrawingManifesto();
     initProjectsSpiralHelix();
+    initHUDClock();
+    initDiagnosticsTerminal();
   });
 })();

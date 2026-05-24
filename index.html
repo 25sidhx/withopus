@@ -143,6 +143,14 @@
         <span class="nav-logo-text">WITH OPUS</span>
       </a>
 
+      <div class="nav-hud-meta">
+        <span class="hud-tag">OPUS_OS: ACTIVE</span>
+        <span class="hud-separator">//</span>
+        <span class="hud-time" id="hud-time">--:--:--</span>
+        <span class="hud-separator">//</span>
+        <span class="hud-tag">21.14N 79.08E</span>
+      </div>
+
       <ul class="nav-links" id="nav-links">
         <li><a href="#intro" class="nav-link">About</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
@@ -164,31 +172,36 @@
   <section class="hero" id="hero">
     <div class="hero-inner">
       <div class="hero-left">
-        <span class="hero-label-badge">( Nagpur, India — Elite Brand & Motion Studio )</span>
+        <span class="hero-label-badge font-mono reveal">[ OPUS_ARCHIVE: COGNITIVE_VISUAL_MONUMENTS ]</span>
         <h1 class="hero-display-text reveal" data-anime="withopus">
-          <span class="hero-row">WITH</span>
-          <span class="hero-row">OPUS</span>
+          <span class="hero-row text-glitch" data-text="VISUAL">VISUAL</span>
+          <span class="hero-row font-mono text-accent">MONUMENTS</span>
         </h1>
         <p class="hero-editorial-desc reveal">
-          We engineer high-contrast brand systems, bespoke web interactions, and dynamic kinetic motion for brands that refuse to blend in.
+          We believe in visual immortality. In a digital wilderness of generic templates and high-volume noise, we construct cinematic archives, custom-engineered identity interfaces, and high-contrast motion grids for brands that refuse to be forgotten.
         </p>
         <div class="hero-editorial-cta-wrap reveal">
-          <a href="#services" class="hero-cta-btn">
-            Browse our expertise <span class="arrow">↗</span>
+          <a href="#projects" class="hero-cta-btn">
+            Browse the archive <span class="arrow">↘</span>
           </a>
         </div>
       </div>
 
       <div class="hero-right">
         <div class="hero-card-wrap">
-          <div class="hero-card" id="hero-card">
-            <div class="hero-card-header">
-              <span class="hero-card-header-text">Showcase</span>
-              <div class="hero-card-dots">
-                <span></span><span></span><span></span>
-              </div>
+          <!-- Interactive Prismatic Glass Portal / Sacred Geometry Reactor -->
+          <div class="prismatic-portal" id="hero-card">
+            <div class="portal-backlight"></div>
+            <div class="portal-ring ring-1"></div>
+            <div class="portal-ring ring-2"></div>
+            <div class="portal-ring ring-3"></div>
+            <div class="portal-core">
+              <div class="core-inner"></div>
             </div>
-            <img src="hero_wavy_graphic.png" alt="With Opus Kinetic Wave showcase" class="hero-card-img">
+            <div class="portal-specs">
+              <div class="spec-line font-mono">SYS_CORE: OPERATIVE</div>
+              <div class="spec-line font-mono">SYS_LOC: 21.14N 79.08E</div>
+            </div>
           </div>
         </div>
       </div>
@@ -218,7 +231,19 @@
                 <span></span><span></span><span></span>
               </div>
             </div>
-            <img src="profile_monochrome.png" alt="With Opus Silhouette Creative Portrait" class="intro-card-img">
+            <!-- Abstract Sacred Server Core Visual (No stock human portrait) -->
+            <div class="intro-card-visual">
+              <div class="server-backlight"></div>
+              <div class="server-grid"></div>
+              <div class="server-concentric ring-1"></div>
+              <div class="server-concentric ring-2"></div>
+              <div class="server-emitter"></div>
+              <div class="server-telemetry">
+                <div class="telemetry-row font-mono"><span>SYSTEM:</span><span>OPUS_CORE_v2.0</span></div>
+                <div class="telemetry-row font-mono"><span>STATUS:</span><span>ONLINE_SPRINT</span></div>
+                <div class="telemetry-row font-mono"><span>COORDS:</span><span>NGP_21.14_79.08</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -712,6 +737,19 @@
       </div>
     </div>
   </footer>
+
+  <!-- ═══ KEYBOARD TERMINAL DIAGNOSTICS OVERLAY ═══ -->
+  <div class="terminal-overlay" id="terminal-overlay">
+    <div class="terminal-box">
+      <div class="terminal-header">
+        <span class="terminal-title">OPUS_DIAGNOSTICS_CONSOLE.v2.0</span>
+        <button class="terminal-close" id="terminal-close-btn">&times;</button>
+      </div>
+      <div class="terminal-body font-mono" id="terminal-log-stream">
+        <!-- Generates live ticking log records dynamically via interactions.js -->
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ SCRIPTS ═══ -->
   <script src="https://unpkg.com/animejs@3.2.2/lib/anime.min.js"></script>

@@ -1,40 +1,41 @@
 :root {
-  /* ── Light Editorial & High-Contrast Dark Palette (OPUS Framer Match) ── */
-  --bg-primary: #ffffff;          /* Pure white background (Hero base) */
-  --bg-secondary: #f3f3f1;        /* Warm light gray/cream (Intro & Services base) */
-  --bg-dark: #0a0a0a;             /* Rich black (Process & Footer base) */
-  --bg-dark-card: #161616;        /* Sleek card elements inside dark sections */
-  --bg-elevated: #ffffff;         /* Pure white elevated cards for high-contrast */
-  --bg-surface: #ffffff;          /* Surface background */
+  /* ── Deep Obsidian & High-Contrast Cinematic Dark Palette (OPUS Temple Mode) ── */
+  --bg-primary: #060606;          /* Deep rich obsidian black */
+  --bg-secondary: #0c0c0d;        /* Matte dark steel gray (for subtle section contrast) */
+  --bg-dark: #060606;             /* Core background */
+  --bg-dark-card: #121213;        /* Sleek card elements */
+  --bg-elevated: #18181a;         /* Elevated surface elements */
+  --bg-surface: #0a0a0a;          /* Surface backgrounds */
   
-  --text-primary: #000000;        /* Sharp high-contrast black for headings */
-  --text-secondary: rgba(0, 0, 0, 0.65); /* Elegant dark gray for body text */
-  --text-tertiary: rgba(0, 0, 0, 0.4);  /* Subtle text / label elements */
-  --text-light: #f3f3f1;          /* Off-white primary text in dark sections */
-  --text-light-muted: rgba(243, 243, 241, 0.6); /* Muted body text in dark sections */
+  --text-primary: #ffffff;        /* Pure white for bold, sharp editorial typography */
+  --text-secondary: rgba(255, 255, 255, 0.7); /* Lighter gray for beautiful, breathable body copy */
+  --text-tertiary: rgba(255, 255, 255, 0.45); /* Technical label muted texts */
+  --text-light: #ffffff;          /* Universal light text compatibility */
+  --text-light-muted: rgba(255, 255, 255, 0.55);
+ 
+  --border-subtle: rgba(255, 255, 255, 0.05); /* Hairline dividers for ultra-sleek structural framing */
+  --border-default: rgba(255, 255, 255, 0.12); /* Standard modular borders */
+  --border-dark: rgba(255, 255, 255, 0.08);
 
-  --border-subtle: rgba(0, 0, 0, 0.08); /* Hairline gray dividers in light sections */
-  --border-default: rgba(0, 0, 0, 0.15); /* Default borders in light sections */
-  --border-dark: rgba(255, 255, 255, 0.12); /* Hairline borders inside dark sections */
+  /* ── Accent System (Framer Cherry Red & Volumetric Gold-Amber) ── */
+  --accent: #eb4d6d;              /* Vibrant Framer Cherry Red signature signature */
+  --accent-amber: #d4af37;        /* Volumetric classic gold/amber for high-tech alerts */
+  --accent-glow-20: rgba(235, 77, 109, 0.08); /* Prismatic halo glow */
+  --accent-glow-40: rgba(235, 77, 109, 0.18); 
 
-  /* ── Accent (Electric Blue — Maestro Color Ban Compliant) ── */
-  --accent: #0048f9;              /* Vibrant cobalt blue */
-  --accent-glow-20: rgba(0, 72, 249, 0.08); /* Soft hover state glow */
-  --accent-glow-40: rgba(0, 72, 249, 0.18); /* Active hover state glow */
+  /* ── Glass & Overlay Tokens (Frosted OS HUD) ── */
+  --glass-nav: rgba(6, 6, 6, 0.75);       /* Frosted glass operating system HUD */
+  --glass-nav-dark: rgba(6, 6, 6, 0.75);  /* Synced drawer backs */
+  --glass-overlay: rgba(0, 0, 0, 0.75);   /* Heavy ambient backdrops */
+  --glass-blur: 24px;
 
-  /* ── Glass & Overlay Tokens ── */
-  --glass-nav: rgba(255, 255, 255, 0.85);  /* Nav backdrop for light theme */
-  --glass-nav-dark: rgba(10, 10, 10, 0.85); /* Nav backdrop inside dark sections */
-  --glass-overlay: rgba(0, 0, 0, 0.3);      /* Overlay backdrop */
-  --glass-blur: 20px;
-
-  /* ── Typography (Satoshi / Onest Display scale) ── */
+  /* ── Typography (Onest Display scale & Fragment Mono) ── */
   --font-display: 'Onest', system-ui, sans-serif;
   --font-body: 'Inter', 'Inter Placeholder', system-ui, sans-serif;
   --font-mono: 'Fragment Mono', 'Courier New', monospace;
   --font-ui: 'Manrope', 'Inter', system-ui, sans-serif;
 
-  /* ── Radius System (Framer OPUS style) ── */
+  /* ── Radius System (Sleek Brutalist Rounded-Edge corners) ── */
   --r-xs: 4px;
   --r-sm: 8px;
   --r-md: 12px;
@@ -44,8 +45,8 @@
   --r-full: 100px;
 
   /* ── Spacing ── */
-  --safe: clamp(20px, 4vw, 60px);
-  --section-gap: clamp(80px, 12vh, 160px);
+  --safe: clamp(24px, 5vw, 80px);
+  --section-gap: clamp(100px, 15vh, 200px);
 
   /* ── Motion (magic-animator tokens) ── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

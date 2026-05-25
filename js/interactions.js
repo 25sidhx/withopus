@@ -909,6 +909,25 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     25. HUD CLOCK — Real-Time Systems Telemetry
+     ═══════════════════════════════════════════════════════ */
+  function initHUDClock() {
+    const clockEl = $('#hud-clock');
+    if (!clockEl) return;
+
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getUTCHours()).padStart(2, '0');
+      const mins = String(now.getUTCMinutes()).padStart(2, '0');
+      const secs = String(now.getUTCSeconds()).padStart(2, '0');
+      clockEl.textContent = `${hrs}:${mins}:${secs} UTC`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  }
+
+  /* ═══════════════════════════════════════════════════════
      INIT
      ═══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', () => {
@@ -933,6 +952,8 @@
     initProjectsHorizontalScroll();
     initDiagnosticsTerminal();
     initMagneticButtons();
+    initHUDClock();
   });
 })();
+
 

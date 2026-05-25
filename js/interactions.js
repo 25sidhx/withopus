@@ -856,6 +856,59 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     24. TACTILE MAGNETIC BUTTONS — Proximity Attraction Spell
+     ═══════════════════════════════════════════════════════ */
+  function initMagneticButtons() {
+    const magneticBtns = $$('.hero-cta-btn, .nav-cta-desktop, .cta-banner-btn, .form-submit');
+    if (!magneticBtns.length) return;
+
+    magneticBtns.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        // Pull the button towards cursor, but limit the translation to max 12px
+        const pullX = x * 0.35;
+        const pullY = y * 0.35;
+
+        btn.style.transform = `translate3d(${pullX}px, ${pullY}px, 0) scale(1.02)`;
+        const arrow = btn.querySelector('.arrow');
+        if (arrow) {
+          arrow.style.transform = 'translate(3px, -3px) scale(1.1)';
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        // Smoothly return back to baseline using a spring easing
+        if (typeof anime !== 'undefined') {
+          anime({
+            targets: btn,
+            translateX: 0,
+            translateY: 0,
+            scale: 1,
+            duration: 650,
+            easing: 'cubicBezier(0.34, 1.56, 0.64, 1)'
+          });
+          const arrow = btn.querySelector('.arrow');
+          if (arrow) {
+            anime({
+              targets: arrow,
+              translateX: 0,
+              translateY: 0,
+              scale: 1,
+              duration: 500,
+              easing: 'easeOutQuad'
+            });
+          }
+        } else {
+          btn.style.transform = '';
+        }
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════
      INIT
      ═══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', () => {
@@ -879,5 +932,7 @@
     initScrollDrawingManifesto();
     initProjectsHorizontalScroll();
     initDiagnosticsTerminal();
+    initMagneticButtons();
   });
 })();
+

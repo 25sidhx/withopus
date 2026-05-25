@@ -10,12 +10,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 1.5px;
   width: 0%;
-  background: var(--text-primary);
+  background: linear-gradient(90deg, var(--accent), var(--accent-amber));
+  box-shadow: 0 0 8px rgba(232, 160, 52, 0.6);
   z-index: 9998;
   transition: width 0.05s linear;
 }
+
 
 /* ══════════════════════════════════════════════════════════
    NAV DARK MODE OVERRIDE — When over dark sections

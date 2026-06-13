@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opus CRM</title>
+  <style>
+    :root {
+      --bg: #0D0B14;
+      --bg2: #13101E;
+      --bg3: #1A1625;
+      --border: #2A2535;
+      --text: #E8E4E0;
+      --text-muted: #6B6478;
+      --amber: #E8A034;
+      --accent: #E8A034;
+      --green: #4CAF50;
+      --red: #E53935;
+      --blue: #42A5F5;
+      --radius: 8px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    
+    /* Header */
+    .header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .header h1 { font-size: 20px; font-weight: 600; }
+    .header h1 span { color: var(--amber); }
+    .header-stats { display: flex; gap: 24px; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 20px; font-weight: 700; color: var(--amber); }
+    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Pipeline */
+    .pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 24px; }
+    .column { background: var(--bg2); border-radius: var(--radius); border: 1px solid var(--border); min-height: 400px; }
+    .column-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .column-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .column-count { font-size: 12px; background: var(--bg3); padding: 2px 8px; border-radius: 10px; color: var(--text-muted); }
+    .column-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* Cards */
+    .card { background: var(--bg3); border-radius: var(--radius); padding: 14px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+    .card:hover { border-color: var(--amber); transform: translateY(-1px); }
+    .card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .card-meta { font-size: 12px; color: var(--text-muted); display: flex; gap: 12px; flex-wrap: wrap; }
+    .card-meta span { display: flex; align-items: center; gap: 4px; }
+    .card-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .card-tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+    .card-tag.priority-high { background: rgba(229,57,53,0.15); color: var(--red); border-color: rgba(229,57,53,0.3); }
+    .card-tag.priority-medium { background: rgba(232,160,52,0.15); color: var(--amber); border-color: rgba(232,160,52,0.3); }
+    .card-tag.priority-low { background: rgba(66,165,245,0.15); color: var(--blue); border-color: rgba(66,165,245,0.3); }
+    .card-date { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+    /* Add button */
+    .add-btn { width: 100%; padding: 10px; background: transparent; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--text-muted); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .add-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h2 { font-size: 18px; font-weight: 600; }
+    .modal-close { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+    .modal-body { padding: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 14px; font-family: inherit; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--amber); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn { padding: 10px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
+    .btn-primary { background: var(--amber); color: var(--bg); }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-danger { background: var(--red); color: white; }
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+
+    /* Detail panel */
+    .detail-panel { display: none; position: fixed; right: 0; top: 0; bottom: 0; width: 420px; background: var(--bg2); border-left: 1px solid var(--border); z-index: 99; overflow-y: auto; }
+    .detail-panel.open { display: block; }
+    .detail-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .detail-body { padding: 20px; }
+    .detail-section { margin-bottom: 24px; }
+    .detail-section h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+    .detail-section p { font-size: 14px; line-height: 1.6; }
+    .detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .activity-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-date { font-size: 11px; color: var(--text-muted); }
+    .activity-text { font-size: 13px; margin-top: 2px; }
+
+    /* Search */
+    .search-bar { padding: 16px 24px; border-bottom: 1px solid var(--border); }
+    .search-bar input { width: 100%; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 14px; }
+    .search-bar input:focus { outline: none; border-color: var(--amber); }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .pipeline { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .pipeline { grid-template-columns: 1fr; }
+      .header { flex-direction: column; gap: 12px; }
+      .detail-panel { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>opus <span>crm</span></h1>
+    <div class="header-stats">
+      <div class="stat"><div class="stat-num" id="totalLeads">0</div><div class="stat-label">Total</div></div>
+      <div class="stat"><div class="stat-num" id="hotLeads">0</div><div class="stat-label">Hot</div></div>
+      <div class="stat"><div class="stat-num" id="clients">0</div><div class="stat-label">Clients</div></div>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search leads...">
+  </div>
+
+  <div class="pipeline">
+    <!-- New Leads -->
+    <div class="column" data-status="new">
+      <div class="column-header">
+        <span class="column-title">New Leads</span>
+        <span class="column-count" id="count-new">0</span>
+      </div>
+      <div class="column-body" id="col-new">
+        <button class="add-btn" onclick="openModal()">+ Add Lead</button>
+      </div>
+    </div>
+    <!-- Contacted -->
+    <div class="column" data-status="contacted">
+      <div class="column-header">
+        <span class="column-title">Contacted</span>
+        <span class="column-count" id="count-contacted">0</span>
+      </div>
+      <div class="column-body" id="col-contacted"></div>
+    </div>
+    <!-- Interested -->
+    <div class="column" data-status="interested">
+      <div class="column-header">
+        <span class="column-title">Interested</span>
+        <span class="column-count" id="count-interested">0</span>
+      </div>
+      <div class="column-body" id="col-interested"></div>
+    </div>
+    <!-- Negotiating -->
+    <div class="column" data-status="negotiating">
+      <div class="column-header">
+        <span class="column-title">Negotiating</span>
+        <span class="column-count" id="count-negotiating">0</span>
+      </div>
+      <div class="column-body" id="col-negotiating"></div>
+    </div>
+    <!-- Client / Lost -->
+    <div class="column" data-status="client">
+      <div class="column-header">
+        <span class="column-title">Clients</span>
+        <span class="column-count" id="count-client">0</span>
+      </div>
+      <div class="column-body" id="col-client"></div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">New Lead</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Business Name *</label>
+          <input type="text" id="f-name" placeholder="e.g. Namma Yedi Cafe">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Type</label>
+            <select id="f-type">
+              <option value="restaurant">Restaurant / Cafe</option>
+              <option value="retail">Retail / Shop</option>
+              <option value="clinic">Clinic / Healthcare</option>
+              <option value="realestate">Real Estate</option>
+              <option value="salon">Salon / Spa</option>
+              <option value="gym">Gym / Fitness</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="f-location" placeholder="e.g. Nagpur, India">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Instagram</label>
+            <input type="text" id="f-instagram" placeholder="@username or empty">
+          </div>
+          <div class="form-group">
+            <label>Website</label>
+            <input type="text" id="f-website" placeholder="URL or empty">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" id="f-phone" placeholder="+91...">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" id="f-email" placeholder="email@...">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="f-priority">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Source</label>
+            <select id="f-source">
+              <option value="scraped">Auto-scraped</option>
+              <option value="referral">Referral</option>
+              <option value="inbound">Inbound</option>
+              <option value="manual">Manual</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="f-notes" placeholder="What's wrong with their brand? What do they need?"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="deleteBtn" style="display:none" onclick="deleteLead()">Delete</button>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-header">
+      <h2 id="detailName">Lead Details</h2>
+      <button class="modal-close" onclick="closeDetail()">&times;</button>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+
+  <script>
+    // ── Data ──
+    let leads = JSON.parse(localStorage.getItem('opus_leads') || '[]');
+    let editingId = null;
+
+    // ── Render ──
+    function render() {
+      const cols = ['new','contacted','interested','negotiating','client'];
+      let total = 0, hot = 0, clients = 0;
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      cols.forEach(s => {
+        const el = document.getElementById('col-' + s);
+        // Keep the add button for 'new'
+        const addBtn = s === 'new' ? '<button class="add-btn" onclick="openModal()">+ Add Lead</button>' : '';
+        el.innerHTML = addBtn;
+
+        const filtered = leads.filter(l => {
+          if (l.status !== s) return false;
+          if (search) {
+            const searchStr = (l.name + l.location + l.type + l.notes + (l.instagram||'') + (l.website||'')).toLowerCase();
+            return searchStr.includes(search);
+          }
+          return true;
+        });
+
+        document.getElementById('count-' + s).textContent = filtered.length;
+
+        filtered.forEach(l => {
+          total++;
+          if (l.priority === 'high') hot++;
+          if (s === 'client') clients++;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.onclick = () => openDetail(l.id);
+          card.innerHTML = `
+            <div class="card-name">${l.name}</div>
+            <div class="card-meta">
+              <span>${l.type}</span>
+              <span>${l.location || 'No location'}</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag priority-${l.priority}">${l.priority}</span>
+              ${l.instagram ? '' : '<span class="card-tag">No IG</span>'}
+              ${l.website ? '' : '<span class="card-tag">No website</span>'}
+            </div>
+            <div class="card-date">${new Date(l.created).toLocaleDateString()}</div>
+          `;
+          el.appendChild(card);
+        });
+      });
+
+      document.getElementById('totalLeads').textContent = total;
+      document.getElementById('hotLeads').textContent = hot;
+      document.getElementById('clients').textContent = clients;
+    }
+
+    // ── Modal ──
+    function openModal(id) {
+      editingId = id || null;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.getElementById('modalTitle').textContent = id ? 'Edit Lead' : 'New Lead';
+      document.getElementById('deleteBtn').style.display = id ? 'block' : 'none';
+
+      if (id) {
+        const l = leads.find(x => x.id === id);
+        if (l) {
+          document.getElementById('f-name').value = l.name || '';
+          document.getElementById('f-type').value = l.type || 'restaurant';
+          document.getElementById('f-location').value = l.location || '';
+          document.getElementById('f-instagram').value = l.instagram || '';
+          document.getElementById('f-website').value = l.website || '';
+          document.getElementById('f-phone').value = l.phone || '';
+          document.getElementById('f-email').value = l.email || '';
+          document.getElementById('f-priority').value = l.priority || 'medium';
+          document.getElementById('f-source').value = l.source || 'manual';
+          document.getElementById('f-notes').value = l.notes || '';
+        }
+      } else {
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-type').value = 'restaurant';
+        document.getElementById('f-location').value = '';
+        document.getElementById('f-instagram').value = '';
+        document.getElementById('f-website').value = '';
+        document.getElementById('f-phone').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-priority').value = 'medium';
+        document.getElementById('f-source').value = 'manual';
+        document.getElementById('f-notes').value = '';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      editingId = null;
+    }
+
+    function saveLead() {
+      const lead = {
+        id: editingId || 'lead_' + Date.now(),
+        name: document.getElementById('f-name').value.trim(),
+        type: document.getElementById('f-type').value,
+        location: document.getElementById('f-location').value.trim(),
+        instagram: document.getElementById('f-instagram').value.trim(),
+        website: document.getElementById('f-website').value.trim(),
+        phone: document.getElementById('f-phone').value.trim(),
+        email: document.getElementById('f-email').value.trim(),
+        priority: document.getElementById('f-priority').value,
+        source: document.getElementById('f-source').value,
+        notes: document.getElementById('f-notes').value.trim(),
+        status: editingId ? (leads.find(x => x.id === editingId)?.status || 'new') : 'new',
+        created: editingId ? (leads.find(x => x.id === editingId)?.created || new Date().toISOString()) : new Date().toISOString(),
+        activities: editingId ? (leads.find(x => x.id === editingId)?.activities || []) : []
+      };
+
+      if (!lead.name) { alert('Business name is required'); return; }
+
+      if (editingId) {
+        const idx = leads.findIndex(x => x.id === editingId);
+        if (idx >= 0) leads[idx] = lead;
+      } else {
+        leads.push(lead);
+      }
+
+      localStorage.setItem('opus_leads', JSON.stringify(leads));
+      closeModal();
+      render();
+    }
+
+    function deleteLead() {
+      if (!editingId) return;
+      if (!confirm('Delete this lead?')) return;
+      leads = leads.filter(x => x.id !== editingId);
+      localStorage.setItem('opus_leads', JSON.stringify(leads));
+      closeModal();
+      render();
+    }
+
+    // ── Detail Panel ──
+    function openDetail(id) {
+      const l = leads.find(x => x.id === id);
+      if (!l) return;
+
+      document.getElementById('detailName').textContent = l.name;
+      document.getElementById('detailBody').innerHTML = `
+        <div class="detail-section">
+          <h3>Info</h3>
+          <p><strong>Type:</strong> ${l.type}</p>
+          <p><strong>Location:</strong> ${l.location || '—'}</p>
+          <p><strong>Priority:</strong> ${l.priority}</p>
+          <p><strong>Source:</strong> ${l.source}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Contact</h3>
+          <p><strong>Instagram:</strong> ${l.instagram || 'None found'}</p>
+          <p><strong>Website:</strong> ${l.website || 'None found'}</p>
+          <p><strong>Phone:</strong> ${l.phone || '—'}</p>
+          <p><strong>Email:</strong> ${l.email || '—'}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Notes</h3>
+          <p>${l.notes || 'No notes'}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Move to</h3>
+          <div class="detail-actions">
+            <button class="btn btn-ghost" onclick="moveLead('${id}','new')">New</button>
+            <button class="btn btn-ghost" onclick="moveLead('${id}','contacted')">Contacted</button>
+            <button class="btn btn-ghost" onclick="moveLead('${id}','interested')">Interested</button>
+            <button class="btn btn-ghost" onclick="moveLead('${id}','negotiating')">Negotiating</button>
+            <button class="btn btn-primary" onclick="moveLead('${id}','client')">Client ✓</button>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3>Activity</h3>
+          <div id="activityList">
+            ${(l.activities || []).map(a => `<div class="activity-item"><div class="activity-date">${new Date(a.date).toLocaleString()}</div><div class="activity-text">${a.text}</div></div>`).join('') || '<p style="color:var(--text-muted);font-size:13px;">No activity yet</p>'}
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;">
+            <input type="text" id="newActivity" placeholder="Add note..." style="flex:1;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;">
+            <button class="btn btn-primary" onclick="addActivity('${id}')">Add</button>
+          </div>
+        </div>
+        <div class="detail-section">
+          <button class="btn btn-ghost" onclick="openModal('${id}')" style="width:100%;">Edit Lead</button>
+        </div>
+      `;
+
+      document.getElementById('detailPanel').classList.add('open');
+    }
+
+    function closeDetail() {
+      document.getElementById('detailPanel').classList.remove('open');
+    }
+
+    function moveLead(id, status) {
+      const l = leads.find(x => x.id === id);
+      if (!l) return;
+      const oldStatus = l.status;
+      l.status = status;
+      if (!l.activities) l.activities = [];
+      l.activities.push({ date: new Date().toISOString(), text: `Moved from "${oldStatus}" to "${status}"` });
+      localStorage.setItem('opus_leads', JSON.stringify(leads));
+      closeDetail();
+      render();
+    }
+
+    function addActivity(id) {
+      const input = document.getElementById('newActivity');
+      const text = input.value.trim();
+      if (!text) return;
+      const l = leads.find(x => x.id === id);
+      if (!l) return;
+      if (!l.activities) l.activities = [];
+      l.activities.push({ date: new Date().toISOString(), text: text });
+      localStorage.setItem('opus_leads', JSON.stringify(leads));
+      input.value = '';
+      openDetail(id);
+    }
+
+    // ── Search ──
+    document.getElementById('searchInput').addEventListener('input', render);
+
+    // ── Init ──
+    render();
+
+    // ── API for external scripts ──
+    window.opusCRM = {
+      getLeads: () => leads,
+      addLead: (l) => { l.id = 'lead_' + Date.now(); l.status = 'new'; l.created = new Date().toISOString(); l.activities = []; leads.push(l); localStorage.setItem('opus_leads', JSON.stringify(leads)); render(); return l; },
+      addLeads: (arr) => { arr.forEach(l => window.opusCRM.addLead(l)); },
+      getStats: () => ({ total: leads.length, hot: leads.filter(l=>l.priority==='high').length, clients: leads.filter(l=>l.status==='client').length })
+    };
+  </script>
+</body>
+</html>

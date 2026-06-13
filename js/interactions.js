@@ -108,14 +108,13 @@
       easing: 'cubicBezier(0.34, 1.56, 0.64, 1)'
     }, '-=800')
     .add({
-      targets: '.hero-background-portal',
+      targets: '.hero-card-wrap',
       opacity: [0, 1],
       scale: [0.88, 1],
       translateY: [40, 0],
       duration: 1400,
       easing: 'cubicBezier(0.34, 1.56, 0.64, 1)'
     }, '-=700')
-
     .add({
       targets: ['.hero-editorial-desc', '.hero-editorial-cta-wrap'],
       opacity: [0, 1],
@@ -136,11 +135,10 @@
      ═══════════════════════════════════════════════════════ */
   function initParallax() {
     const hero = $('.hero');
-    const heroCardWrap = $('.hero-card-wrap') || $('.hero-background-portal');
-    const heroCard = $('#hero-card');
+    const heroCardWrap = $('.hero-card-wrap');
+    const heroCard = $('.hero-card');
     const heroText = $('.hero-display-text');
     const heroScroll = $('.hero-scroll');
-
     if (!hero) return;
 
     // 1. Scroll Parallax translation on outer elements

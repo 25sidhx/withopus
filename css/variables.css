@@ -1,46 +1,46 @@
 :root {
-  /* ── Deep Obsidian & High-Contrast Cinematic Dark Palette (OPUS Warm Temple Mode) ── */
-  --bg-primary: #0d0b14;          /* Deep rich Void Black background */
-  --bg-secondary: #13101e;        /* Matte Surface Dark for section contrast */
-  --bg-dark: #0d0b14;             /* Core background */
-  --bg-dark-card: #13101e;        /* Sleek card elements (Surface Dark) */
-  --bg-elevated: #2a2535;         /* Elevated surface elements (Surface Mid) */
-  --bg-surface: #0d0b14;          /* Surface backgrounds */
+  /* ── Premium Soft White & High-Contrast Editorial Light Palette (Swiss Minimalist Mode) ── */
+  --bg-primary: #ffffff;          /* Pure breathable white background */
+  --bg-secondary: #f8fafc;        /* Soft Slate Tint for section contrast */
+  --bg-dark: #ffffff;             /* Light Mode core background */
+  --bg-dark-card: #ffffff;        /* Pure White card surfaces for crisp layout layering */
+  --bg-elevated: #f1f5f9;         /* Elevated light Slate elements */
+  --bg-surface: #ffffff;          /* Surface light background */
   
-  --text-primary: #f5f0e8;        /* Warm Cream for bold, sharp editorial typography */
-  --text-secondary: rgba(245, 240, 232, 0.7); /* Breathable warm cream body copy */
-  --text-tertiary: rgba(245, 240, 232, 0.45); /* Technical label muted texts */
-  --text-light: #f5f0e8;          /* Universal light text compatibility */
-  --text-light-muted: rgba(245, 240, 232, 0.55);
+  --text-primary: #0f172a;        /* Deep Obsidian Charcoal for bold typography */
+  --text-secondary: #475569;      /* Slate-600 body copy for maximum readability */
+  --text-tertiary: #64748b;       /* Slate-500 for micro-labels and UI tags */
+  --text-light: #ffffff;          /* Universal light text compatibility for blue CTA backgrounds */
+  --text-light-muted: rgba(255, 255, 255, 0.75);
  
-  --border-subtle: rgba(245, 240, 232, 0.05); /* Hairline dividers for ultra-sleek structural framing */
-  --border-default: rgba(245, 240, 232, 0.12); /* Standard modular borders */
-  --border-dark: rgba(245, 240, 232, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.05); /* Hairline dividers for structural framing */
+  --border-default: #e2e8f0;      /* Slate-200 standard borders */
+  --border-dark: #cbd5e1;         /* Slate-300 high-contrast borders */
 
-  /* ── Accent System (Warm Amber & Volumetric Burnt Orange / Crimson Glow) ── */
-  --accent: #e8a034;              /* Vibrant Amber brand color */
-  --accent-amber: #d4431a;        /* Burnt Orange accent color */
-  --accent-glow-20: rgba(232, 160, 52, 0.08); /* Amber prismatic halo glow */
-  --accent-glow-40: rgba(232, 160, 52, 0.18); 
+  /* ── Accent System (Electric Blue & Electric Cyan Glows) ── */
+  --accent: #0052ff;              /* Vibrant Electric/Cobalt Blue brand color */
+  --accent-amber: #00b4ff;        /* Electric Cyan accent color */
+  --accent-glow-20: rgba(0, 82, 255, 0.06); /* Soft blue halo glow */
+  --accent-glow-40: rgba(0, 82, 255, 0.12); 
 
-  /* ── Glass & Overlay Tokens (Frosted OS HUD) ── */
-  --glass-nav: rgba(13, 11, 20, 0.85);   /* Frosted glass Void Black HUD */
-  --glass-nav-dark: rgba(13, 11, 20, 0.85); /* Synced drawer backs */
-  --glass-overlay: rgba(13, 11, 20, 0.75); /* Heavy ambient backdrops */
-  --glass-blur: 24px;
+  /* ── Glass & Overlay Tokens (Frosted Premium HUD) ── */
+  --glass-nav: rgba(255, 255, 255, 0.8);   /* Frosted white glass menu bar */
+  --glass-nav-dark: rgba(255, 255, 255, 0.8); /* Drawer synchronization */
+  --glass-overlay: rgba(255, 255, 255, 0.75); /* Frosted ambient overlays */
+  --glass-blur: 20px;
 
-  /* ── Typography (Satoshi Display scale & Fragment Mono) ── */
+  /* ── Typography (Satoshi Display scale & Inter Body) ── */
   --font-display: 'Satoshi', 'Onest', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Fragment Mono', 'Courier New', monospace;
-  --font-ui: 'Inter', 'Manrope', system-ui, sans-serif;
+  --font-mono: 'Inter', system-ui, sans-serif; /* Liquidate monospace typewriter look */
+  --font-ui: 'Manrope', 'Inter', system-ui, sans-serif;
 
-  /* ── Radius System (Sleek Brutalist Sharp edges - Design Mandate) ── */
-  --r-xs: 0px;
-  --r-sm: 0px;
-  --r-md: 2px;
-  --r-lg: 2px;
-  --r-xl: 4px;
+  /* ── Radius System (Premium rounded geometry matching Apple/Linear/Framer) ── */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
   --r-pill: 9999px;
   --r-full: 9999px;
 

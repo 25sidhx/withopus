@@ -27,8 +27,8 @@
   display: block;
   background: transparent !important;
   
-  /* Color-grade the Spline scene to match Opus amber/gold brand palette */
-  filter: sepia(0.35) hue-rotate(-10deg) saturate(2.2) brightness(1.05) contrast(1.15);
+  /* Color-grade the Spline scene to match modern electric blue-cyan palette */
+  filter: saturate(1.8) hue-rotate(190deg) brightness(1.15) contrast(1.1);
 }
 
 /* Hide ALL Spline UI overlays — logo, hint, watermark */

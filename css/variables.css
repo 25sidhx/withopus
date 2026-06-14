@@ -2,8 +2,8 @@
   /* ── Premium Soft White & High-Contrast Editorial Light Palette (Swiss Minimalist Mode) ── */
   --bg-primary: #ffffff;          /* Pure breathable white background */
   --bg-secondary: #f8fafc;        /* Soft Slate Tint for section contrast */
-  --bg-dark: #ffffff;             /* Light Mode core background */
-  --bg-dark-card: #ffffff;        /* Pure White card surfaces for crisp layout layering */
+  --bg-dark: #0f172a;             /* Deep dark sections: process, CTA, footer */
+  --bg-dark-card: #1e293b;        /* Dark card surfaces for dark sections */
   --bg-elevated: #f1f5f9;         /* Elevated light Slate elements */
   --bg-surface: #ffffff;          /* Surface light background */
   

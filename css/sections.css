@@ -612,7 +612,7 @@
 .projects-header-sticky .section-label {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--accent);
+  color: #60a5fa;
   letter-spacing: 0.05em;
 }
 
@@ -620,7 +620,7 @@
   font-family: var(--font-display);
   font-size: clamp(32px, 4vw, 52px);
   font-weight: 600;
-  color: var(--text-primary);
+  color: #ffffff;
   text-transform: uppercase;
   margin: 8px 0 0 0;
   letter-spacing: -0.03em;
@@ -792,7 +792,7 @@
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #ffffff;
   line-height: 1.35;
   letter-spacing: -0.01em;
 }
@@ -846,11 +846,11 @@
 }
 
 .process-header .section-label {
-  color: var(--text-tertiary);
+  color: rgba(255,255,255,0.6);
 }
 
 .process-header .section-heading {
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .process-desc {
@@ -898,7 +898,7 @@
 .process-step-num {
   font-family: var(--font-mono);
   font-size: clamp(14px, 1.2vw, 18px);
-  color: var(--text-tertiary);
+  color: #60a5fa;
   font-weight: 500;
 }
 
@@ -920,7 +920,7 @@
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #ffffff;
   margin: 0;
   letter-spacing: -0.02em;
 }
@@ -972,7 +972,7 @@
 }
 
 .cta-banner .section-label {
-  color: var(--text-tertiary);
+  color: rgba(255,255,255,0.6);
 }
 
 .cta-banner-heading {
@@ -980,7 +980,7 @@
   font-size: clamp(32px, 5vw, 60px);
   font-weight: 600;
   line-height: 1.1;
-  color: var(--text-primary);
+  color: #ffffff;
   letter-spacing: -0.03em;
 }
 

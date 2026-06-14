@@ -60,16 +60,7 @@
 
 /* ── OS HUD Telemetry Panel ── */
 .nav-hud-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-tertiary);
-  border-left: 1px solid var(--border-subtle);
-  padding-left: 18px;
-  margin-left: 18px;
-  margin-right: auto; /* Push navigation links to center-right */
+  display: none;
 }
 
 .hud-tag {

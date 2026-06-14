@@ -127,7 +127,7 @@
 }
 
 .service-accordion-item.active .service-title {
-  color: #ffffff !important;
+  color: var(--text-primary) !important;
   text-shadow: 0 0 12px rgba(232, 160, 52, 0.3);
 }
 

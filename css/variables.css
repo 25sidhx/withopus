@@ -1,45 +1,66 @@
 :root {
-  /* ── Premium Soft White & High-Contrast Editorial Light Palette (Swiss Minimalist Mode) ── */
-  --bg-primary: #ffffff;          /* Pure breathable white background */
-  --bg-secondary: #f8fafc;        /* Soft Slate Tint for section contrast */
-  --bg-dark: #0f172a;             /* Deep dark sections: process, CTA, footer */
-  --bg-dark-card: #1e293b;        /* Dark card surfaces for dark sections */
-  --bg-elevated: #f1f5f9;         /* Elevated light Slate elements */
-  --bg-surface: #ffffff;          /* Surface light background */
-  
-  --text-primary: #0f172a;        /* Deep Obsidian Charcoal for bold typography */
-  --text-secondary: #475569;      /* Slate-600 body copy for maximum readability */
-  --text-tertiary: #64748b;       /* Slate-500 for micro-labels and UI tags */
-  --text-light: #ffffff;          /* Universal light text compatibility for blue CTA backgrounds */
-  --text-light-muted: rgba(255, 255, 255, 0.75);
- 
-  --border-subtle: rgba(15, 23, 42, 0.05); /* Hairline dividers for structural framing */
-  --border-default: #e2e8f0;      /* Slate-200 standard borders */
-  --border-dark: #cbd5e1;         /* Slate-300 high-contrast borders */
+  /* ═══ OPUS WARM CINEMATIC MINIMALISM — LIGHT VARIANT ═══
+     White theme with Opus signature warmth — cream-tinted canvas,
+     warm charcoal text, amber→burnt-orange→crimson→violet gradient.
+     Pairs with the brand's dark variant (DESIGN.md § 4). */
 
-  /* ── Accent System (Electric Blue & Electric Cyan Glows) ── */
-  --accent: #0052ff;              /* Vibrant Electric/Cobalt Blue brand color */
-  --accent-amber: #00b4ff;        /* Electric Cyan accent color */
-  --accent-glow-20: rgba(0, 82, 255, 0.06); /* Soft blue halo glow */
-  --accent-glow-40: rgba(0, 82, 255, 0.12); 
+  /* ── Canvas (warm cream-tinted white, never pure white) ── */
+  --bg-primary: #FAF7F2;          /* Opus cream — primary canvas */
+  --bg-secondary: #F2EDE3;        /* Deep cream — section contrast */
+  --bg-elevated: #FFFFFF;         /* Paper white — elevated cards */
+  --bg-surface: #F5F0E8;          /* Warm cream surface — cards/inputs */
 
-  /* ── Glass & Overlay Tokens (Frosted Premium HUD) ── */
-  --glass-nav: rgba(255, 255, 255, 0.8);   /* Frosted white glass menu bar */
-  --glass-nav-dark: rgba(255, 255, 255, 0.8); /* Drawer synchronization */
-  --glass-overlay: rgba(255, 255, 255, 0.75); /* Frosted ambient overlays */
+  /* ── Dark Sections (process, CTA, footer — preserve brand) ── */
+  --bg-dark: #0D0B14;             /* Void Black — signature brand canvas */
+  --bg-dark-card: #13101E;        /* Surface Dark — dark cards */
+  --bg-dark-mid: #2A2535;         /* Surface Mid — dark hover/interaction */
+
+  /* ── Typography (warm charcoal, never pure black) ── */
+  --text-primary: #1C1917;        /* Opus Charcoal — headlines */
+  --text-secondary: #44403C;      /* Stone-700 — body copy (4.5:1+ on cream) */
+  --text-tertiary: #78716C;       /* Stone-500 — micro-labels */
+  --text-light: #F5F0E8;          /* Warm Cream — universal light text */
+  --text-light-muted: rgba(245, 240, 232, 0.75);
+
+  /* ── Borders (warm hairlines, tonal not contrast-driven) ── */
+  --border-subtle: rgba(28, 25, 23, 0.06);
+  --border-default: #E7E2D8;      /* Warm stone-200 */
+  --border-dark: #D6D0C2;         /* Warm stone-300 */
+
+  /* ═══ OPUS GRADIENT — Brand Lifeblood ═══ */
+  /* Amber → Burnt Orange → Crimson → Deep Violet */
+  --grad-opus: linear-gradient(135deg, #E8A034 0%, #D4431A 38%, #7A1530 68%, #3D1155 100%);
+  --grad-opus-soft: linear-gradient(135deg, rgba(232, 160, 52, 0.12) 0%, rgba(212, 67, 26, 0.08) 50%, rgba(58, 17, 85, 0.10) 100%);
+  --grad-opus-hover: linear-gradient(135deg, #F2B347 0%, #E04E20 38%, #8A1A38 68%, #4A1570 100%);
+
+  /* ── Accent Tokens (made from Opus gradient anchors) ── */
+  --accent: #D4431A;              /* Burnt Orange — primary CTA accent */
+  --accent-amber: #E8A034;        /* Amber — highlight CTA / link */
+  --accent-crimson: #7A1530;      /* Crimson — deep emphasis */
+  --accent-warm: #44403C;         /* Stone-700 — text-accent fallback */
+
+  /* ── Glows (always amber-warm, never blue) ── */
+  --accent-glow-20: rgba(212, 67, 26, 0.10);
+  --accent-glow-40: rgba(212, 67, 26, 0.20);
+  --glow-amber: rgba(232, 160, 52, 0.35);
+
+  /* ── Glass & Overlay Tokens ── */
+  --glass-nav: rgba(250, 247, 242, 0.88);   /* Frosted cream glass menu bar */
+  --glass-nav-dark: rgba(250, 247, 242, 0.88);
+  --glass-overlay: rgba(250, 247, 242, 0.75);
   --glass-blur: 20px;
 
-  /* ── Typography (Satoshi Display scale & Inter Body) ── */
+  /* ── Typography (Satoshi Display × Inter Body — brand spec) ── */
   --font-display: 'Satoshi', 'Onest', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Inter', system-ui, sans-serif; /* Liquidate monospace typewriter look */
+  --font-mono: 'Fragment Mono', 'Inter', system-ui, sans-serif;
   --font-ui: 'Manrope', 'Inter', system-ui, sans-serif;
 
-  /* ── Radius System (Premium rounded geometry matching Apple/Linear/Framer) ── */
-  --r-xs: 4px;
-  --r-sm: 6px;
-  --r-md: 8px;
-  --r-lg: 12px;
+  /* ── Radius System (sharp intentional geometry, max-2px soft) ── */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;                    /* Brand spec: Sharp 2px geometry */
+  --r-lg: 10px;
   --r-xl: 16px;
   --r-pill: 9999px;
   --r-full: 9999px;
@@ -48,11 +69,12 @@
   --safe: clamp(24px, 5vw, 80px);
   --section-gap: clamp(100px, 15vh, 200px);
 
-  /* ── Motion (magic-animator tokens) ── */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Motion (slow-start, smooth-finish cinematic glide) ── */
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-opus: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-fast: 0.25s;
-  --dur-base: 0.4s;
-  --dur-slow: 0.6s;
-  --dur-reveal: 0.8s;
+  --dur-fast: 0.3s;
+  --dur-base: 0.55s;
+  --dur-slow: 0.8s;
+  --dur-reveal: 1s;
 }

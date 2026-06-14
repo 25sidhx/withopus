@@ -138,11 +138,11 @@
 }
  
 .nav-cta:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--grad-opus);
+  border-color: transparent;
   color: #ffffff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(232, 160, 52, 0.35);
+  box-shadow: 0 4px 20px var(--accent-glow-40);
 }
 
 /* ── Mobile Menu Toggle ── */
